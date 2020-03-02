@@ -1,0 +1,50 @@
+{
+  "name": "@accessibility-tools/ci",
+  "version": "0.3.0",
+  "description": "",
+  "main": "cli.js",
+  "scripts": {
+    "format": "npx prettier --write './src/**/*.js'"
+  },
+  "bin": {
+    "aci": "./cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/accessibility-tools/CI.git"
+  },
+  "keywords": [
+    "Accessibility",
+    "CI",
+    "CLI"
+  ],
+  "author": "James Robb <james.robb@futurice.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/accessibility-tools/CI/issues"
+  },
+  "homepage": "https://github.com/accessibility-tools/CI#readme",
+  "dependencies": {
+    "accessible-pipeline": "^0.6.0",
+    "colors": "^1.4.0",
+    "command-line-args": "^5.1.1",
+    "command-line-usage": "^6.1.0",
+    "mkdirp": "^1.0.3",
+    "terminal-link": "^2.1.1"
+  },
+  "devDependencies": {
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.8",
+    "prettier": "^1.17.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write"
+    ]
+  }
+}
