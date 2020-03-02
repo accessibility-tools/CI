@@ -88,7 +88,7 @@ git clone git@github.com:accessibility-tools/CI.git
 Move into the directory and install the dependencies
 
 ```bash
-cd a11y-ci
+cd CI
 npm install
 ```
 
