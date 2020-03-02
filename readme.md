@@ -77,12 +77,12 @@ aci https://example.com -i -q
 
 ## Contributing
 
-Please read [Contribution guidelines](./contributing.md) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [Contribution guidelines](./.github/contributing.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 When you are ready to begin contributing, you can pull the repository by running:
 
 ```bash
-git clone git@github.com:jamesrweb/a11y-ci.git
+git clone git@github.com:accessibility-tools/CI.git
 ```
 
 Move into the directory and install the dependencies
