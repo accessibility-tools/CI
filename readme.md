@@ -60,7 +60,7 @@ aci https://example.com --pageLimit 1
 #### Scan a whole site and display results in the terminal
 
 ```bash
-aci https://example.com -displayResults
+aci https://example.com --displayResults
 ```
 
 #### Ignore fragment links and query params
