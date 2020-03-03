@@ -1,35 +1,35 @@
-# A11Y CI
+# Accessibility (A11Y) CI
 
-The CI tool allows you to run automated accessibility tests against a specified url. It will run silently until crawling is complete unless you specify it to do another function on top of the crawling, for example, you can ask the crawler to write the results to a file on completion.
+This Continuous Integration (CI) tool allows you to run automated accessibility tests against a specified website (based on a URL). It will run silently until crawling is complete unless you specify it to do another function on top of the crawling, for example, you can ask the crawler to write the results to a file on completion.
 
 ## Getting Started
 
 ### Prerequisites
 
-Before getting started with setting the project up locally, I assume the following are already installed on your computer:
-
-- [NodeJS + Node Package Manager (NPM)](https://nodejs.org/)
-- [Git Source Control Manager](https://git-scm.com/)
+To install and run the project locally, you will need the following on your computer:
+- [NodeJS + Node Package Manager (NPM)](https://nodejs.org/). Node is used to run the script, and npm is used to install it.
 
 ### Installing
 
-Install the CLI by running:
+In a terminal, such as Terminal or iTerm on Mac, Gnome Terminal on Linux, or Powershell on Windows, type:
 
 ```bash
 npm install @accessibility-tools/ci -g
 ```
 
-Once installed you can run the cli using the `aci` command. For a list of available configuration options, you can run `aci --help`.
+This will install the Command Line Interface (CLI) globally in your system, and provide the `aci` command to run it.
+
+For a list of available configuration options, you can run `aci --help`.
 
 ## Running the application
 
-To run the application, simply run:
+To run the application, in a terminal, type:
 
 ```bash
 aci [options]
 ```
 
-### See all valid flags that you can pass
+### List all valid configuration options (flags)
 
 ```bash
 aci --help
@@ -76,6 +76,11 @@ aci https://example.com -i -q
 - [All other dependencies](./package.json)
 
 ## Contributing
+
+Before getting started with setting the project up locally, I assume the following are already installed on your computer:
+
+- [NodeJS + Node Package Manager (NPM)](https://nodejs.org/)
+- [Git Source Control Manager](https://git-scm.com/)
 
 Please read [Contribution guidelines](./.github/contributing.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
