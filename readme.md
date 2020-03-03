@@ -48,25 +48,27 @@ aci https://example.com
 Or
 
 ```bash
-aci -s https://example.com
+aci --site https://example.com
 ```
 
 #### Limit the amount of pages scanned
 
 ```bash
-aci https://example.com -l 1
+aci https://example.com --pageLimit 1
 ```
 
 #### Scan a whole site and display results in the terminal
 
 ```bash
-aci https://example.com -d
+aci https://example.com -displayResults
 ```
 
 #### Ignore fragment links and query params
 
+Sometimes, sites use fragment links (`#section`) and query parameters (`?menu=open`) in the URL to indicate different states or positions in the document. You might want to ignore those if you get up too many duplicates and/or errors.
+
 ```bash
-aci https://example.com -i -q
+aci https://example.com --ignoreFragmentLinks --ignoreQueryParams
 ```
 
 ## Built With
