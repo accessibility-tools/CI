@@ -1,6 +1,7 @@
 const commandLineArgs = require("command-line-args");
 const commandLineUsage = require("command-line-usage");
-const { error } = require("./logger");
+const { error, info } = require("./logger");
+const URL = require("url").URL;
 
 const args = [
   {
@@ -75,13 +76,6 @@ const args = [
     type: Boolean,
     defaultValue: false,
     group: "optional"
-  },
-  {
-    name: "version",
-    alias: "v",
-    type: Boolean,
-    defaultValue: false,
-    group: "optional"
   }
 ];
 
@@ -92,8 +86,12 @@ const args = [
  */
 function sortArgs(args) {
   return [...args].sort((left, right) => {
-    if (left.alias < right.alias) return -1;
-    if (left.alias > right.alias) return 1;
+    if (left.alias < right.alias) {
+      return -1;
+    }
+    if (left.alias > right.alias) {
+      return 1;
+    }
     return 0;
   });
 }
@@ -118,6 +116,14 @@ const help = [
 ];
 
 const parsedArgs = commandLineArgs(options)._all;
+
+if (parsedArgs.help === false && parsedArgs.site instanceof URL === false) {
+  error(
+    `The --site or -s flag with a valid base url for crawling is required.\nExample: aci -s https://example.com\nFor more information: aci --help`
+  );
+
+  process.exit(1);
+}
 
 module.exports = {
   args: parsedArgs,
