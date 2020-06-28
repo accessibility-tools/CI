@@ -1,4 +1,4 @@
-const colors = require("colors");
+const colors = require('colors');
 
 /**
  * @function log
@@ -73,13 +73,13 @@ function error(message) {
 function logByIssueImpact(message, impact, isInversed = false) {
   let coloredMessage = message;
 
-  if (impact === "moderate") {
+  if (impact === 'moderate') {
     coloredMessage = warning(message);
   }
-  if (impact === "serious") {
+  if (impact === 'serious') {
     coloredMessage = danger(message);
   }
-  if (impact === "critical") {
+  if (impact === 'critical') {
     coloredMessage = error(message);
   }
   if (isInversed) {

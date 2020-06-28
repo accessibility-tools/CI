@@ -1,81 +1,81 @@
-const commandLineArgs = require("command-line-args");
-const commandLineUsage = require("command-line-usage");
-const { error, info, log } = require("./logger");
-const URL = require("url").URL;
+const URL = require('url').URL;
+const commandLineArgs = require('command-line-args');
+const commandLineUsage = require('command-line-usage');
+const { verifyRequiredArgs } = require('./verify-required-args');
 
 const args = [
   {
-    name: "site",
-    alias: "s",
+    name: 'site',
+    alias: 's',
     type: url => new URL(url),
-    typeLabel: "{underline url}",
-    group: "required",
+    typeLabel: '{underline url}',
+    group: 'required',
     defaultOption: true
   },
   {
-    name: "ignoreExtensions",
-    alias: "e",
+    name: 'ignoreExtensions',
+    alias: 'e',
     type: String,
     multiple: true,
-    defaultValue: [".pdf", ".jpeg", ".jpg", ".png", ".svg", ".webp"],
-    group: "optional"
+    defaultValue: ['.pdf', '.jpeg', '.jpg', '.png', '.svg', '.webp'],
+    group: 'optional'
   },
   {
-    name: "ignoreFragmentLinks",
-    alias: "i",
+    name: 'ignoreFragmentLinks',
+    alias: 'i',
     type: Boolean,
     defaultValue: false,
-    group: "optional"
+    group: 'optional'
   },
-  { name: "pageLimit", alias: "l", type: Number, group: "optional" },
+  { name: 'pageLimit', alias: 'l', type: Number, group: 'optional' },
   {
-    name: "streaming",
-    alias: "m",
+    name: 'streaming',
+    alias: 'm',
     type: Boolean,
     defaultValue: true,
-    group: "optional"
+    group: 'optional'
   },
   {
-    name: "numRetries",
-    alias: "n",
+    name: 'numRetries',
+    alias: 'n',
     type: Number,
     defaultValue: 5,
-    group: "optional"
+    group: 'optional'
   },
   {
-    name: "ignoreQueryParams",
-    alias: "q",
+    name: 'ignoreQueryParams',
+    alias: 'q',
     type: Boolean,
     defaultValue: false,
-    group: "optional"
+    group: 'optional'
   },
   {
-    name: "displayResults",
-    alias: "d",
+    name: 'displayResults',
+    alias: 'd',
     type: Boolean,
     defaultValue: false,
-    group: "optional"
+    group: 'optional'
   },
   {
-    name: "outputFileName",
-    alias: "f",
+    name: 'outputFileName',
+    alias: 'f',
     type: String,
-    group: "optional"
+    group: 'optional'
   },
-  { name: "outputDirectory", alias: "o", type: String, group: "optional" },
+  { name: 'outputDirectory', alias: 'o', type: String, group: 'optional' },
   {
-    name: "errorAverageThreshold",
-    alias: "t",
+    name: 'errorAverageThreshold',
+    alias: 't',
     type: Number,
     defaultValue: 5,
-    group: "optional"
+    group: 'optional'
   },
   {
-    name: "help",
-    alias: "h",
+    name: 'help',
+    alias: 'h',
     type: Boolean,
     defaultValue: false,
-    group: "optional"
+    group: 'optional'
   }
 ];
 
@@ -100,32 +100,23 @@ const options = sortArgs(args);
 
 const help = [
   {
-    header: "A11Y CI",
-    content: "An accessibility checker for your web based projects"
+    header: 'A11Y CI',
+    content: 'An accessibility checker for your web based projects'
   },
   {
-    header: "Required arguments",
+    header: 'Required arguments',
     optionList: options,
-    group: ["required"]
+    group: ['required']
   },
   {
-    header: "Optional arguments",
+    header: 'Optional arguments',
     optionList: options,
-    group: ["optional"]
+    group: ['optional']
   }
 ];
 
 const parsedArgs = commandLineArgs(options)._all;
-
-if (parsedArgs.help === false && parsedArgs.site instanceof URL === false) {
-  log(
-    error(
-      `The --site or -s flag with a valid base url for crawling is required.\nExample: aci -s https://example.com\nFor more information: aci --help`
-    )
-  );
-
-  process.exit(1);
-}
+verifyRequiredArgs(parsedArgs);
 
 module.exports = {
   args: parsedArgs,
