@@ -1,5 +1,6 @@
 const { runCore: crawler } = require('accessible-pipeline');
 const { args } = require('./helpers/parse-args');
+const { faceHappy, faceSad } = require('./helpers/icons');
 const { getViolations } = require('./helpers/parse-report-results');
 const { getViolationNodesCount } = require('./helpers/count-violation-nodes');
 const { violationGroupingReducer } = require('./helpers/group-violations');
@@ -49,32 +50,14 @@ async function runProgram() {
 
   log('\n');
   log(figlet.textSync('Accessibility Report'));
-  log('Thanks for making the web accessible for everybody!');
   log(asciiLine());
-
-  if (violationsCount === 0) {
-    return success('Well done, no violations found!');
-  }
 
   if (args.displayResults === true) {
     showDetails(violations);
     log(asciiLine());
   }
 
-  showSummary({ pageCount, violationsCount, results });
-
-  if (averageErrors > args.errorAverageThreshold) {
-    error(
-      `CI Failed: Average errors of ${averageErrors} were above the defined threshold of ${args.errorAverageThreshold}`
-    );
-    process.exitCode = 1;
-  } else {
-    warning(
-      `CI run complete but ${violationsCount} ${
-        violations === 1 ? 'issue' : 'issues'
-      } require review.`
-    );
-  }
+  showSummary({ pageCount, violationsCount, results, averageErrors, violations });
 }
 
 function showDetails(violations) {
@@ -82,9 +65,16 @@ function showDetails(violations) {
   displayResults(violations);
 }
 
-function showSummary({ pageCount, violationsCount, results }) {
+function showSummary({ pageCount, violationsCount, results, averageErrors, violations }) {
   log(figlet.textSync('Summary'));
 
+  if (violationsCount === 0) {
+    log(faceHappy);
+    return success('Well done, no violations found!');
+  }
+
+  log(faceSad);
+  log('Thanks for making the web accessible for everybody!');
   log(`Accessibility report for ${args.site}\n`);
   log(`Pages scanned: ${pageCount}`);
 
@@ -110,9 +100,22 @@ function showSummary({ pageCount, violationsCount, results }) {
     { critical: 0, serious: 0, moderate: 0, minor: 0 }
   );
   error(`Critical Issues: ${impactCategoryCounts.critical}`);
-  warning(`Serious Issues: ${impactCategoryCounts.serious}`);
-  danger(`Moderate Issues: ${impactCategoryCounts.moderate}`);
+  danger(`Serious Issues: ${impactCategoryCounts.serious}`);
+  warning(`Moderate Issues: ${impactCategoryCounts.moderate}`);
   log(`Minor Issues: ${impactCategoryCounts.minor}\n`);
+
+  if (averageErrors > args.errorAverageThreshold) {
+    error(
+      `CI Failed: Average errors of ${averageErrors} were above the defined threshold of ${args.errorAverageThreshold}`
+    );
+    process.exitCode = 1;
+  } else {
+    warning(
+      `CI run complete but ${violationsCount} ${
+        violations === 1 ? 'issue' : 'issues'
+      } require review.`
+    );
+  }
 }
 
 module.exports = { runProgram };
