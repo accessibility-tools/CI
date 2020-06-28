@@ -45,13 +45,15 @@ function outputNodeInformation(
  * @returns {void}
  */
 function outputIssueNodeResults(issueGroup, impact) {
-  for (const [group, issues] of Object.entries(issueGroup)) {
+  for (const [index, [group, issues]] of Object.entries(Object.entries(issueGroup))) {
     const totalIssues = issues.length;
     const postFix = totalIssues === 1 ? 'issue' : 'issues';
+
     const title = capitaliseFirst(
-      `• ${translateIssueGrouping(group)} (${totalIssues} ${postFix})`
+      `${translateIssueGrouping(group)} (${totalIssues} ${postFix})`
     );
     logByIssueImpact(underline(title), impact);
+    logByIssueImpact(capitaliseFirst(`Issue ${(parseInt(index) + 1).toString().padStart(2, '0')}`), impact, true);
     log('');
     issues.forEach((issue, index) =>
       outputNodeInformation({ ...issue, impact }, index + 1)
