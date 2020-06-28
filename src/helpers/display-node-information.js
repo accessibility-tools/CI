@@ -26,15 +26,15 @@ function outputNodeInformation(
   const selectors = target.join(',\n');
   const standards = tags.join(',\n');
 
-  logByIssueImpact(underline(title), impact);
-  logByIssueImpact(underline(summaryTitle), impact);
-  logByIssueImpact(failureSummary, impact);
-  logByIssueImpact(underline(selectorTitle), impact);
-  logByIssueImpact(selectors, impact);
-  logByIssueImpact(underline(helpTitle), impact);
-  logByIssueImpact(helpLink, impact);
-  logByIssueImpact(underline(standardsTitle), impact);
-  logByIssueImpact(standards, impact);
+  logByIssueImpact(underline(title), impact, true);
+  log(underline(summaryTitle));
+  log(failureSummary);
+  log(underline(selectorTitle));
+  log(selectors);
+  log(underline(helpTitle));
+  log(helpLink);
+  log(underline(standardsTitle));
+  log(standards);
   log('');
 }
 
@@ -52,8 +52,9 @@ function outputIssueNodeResults(issueGroup, impact) {
     const title = capitaliseFirst(
       `${translateIssueGrouping(group)} (${totalIssues} ${postFix})`
     );
-    logByIssueImpact(underline(title), impact);
     logByIssueImpact(capitaliseFirst(`Issue ${(parseInt(index) + 1).toString().padStart(2, '0')}`), impact, true);
+    log(underline(title));
+    log('Failed accessibility standards: ');
     log('');
     issues.forEach((issue, index) =>
       outputNodeInformation({ ...issue, impact }, index + 1)
