@@ -18,7 +18,7 @@ const { underline } = require("./text-transformers");
 function displayResults(results) {
   results.forEach(({ violations, url }, index) => {
     log(
-      colors.bgWhite.black(
+      colors.white(
         underline(`• Issues for: ${terminalLink("Page link", url)}`)
       )
     );

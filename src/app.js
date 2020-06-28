@@ -1,11 +1,31 @@
-const { runCore: crawler } = require("accessible-pipeline");
-const { args, help } = require("./helpers/parse-args");
-const { getViolations } = require("./helpers/parse-report-results");
-const { getViolationNodesCount } = require("./helpers/count-violation-nodes");
-const { writeReportFile } = require("./helpers/write-report");
-const { displayResults } = require("./helpers/display-results");
-const { log, success, warning, error } = require("./helpers/logger");
-const { verifyRequiredArgs } = require("./helpers/verify-required-args");
+const { runCore: crawler } = require('accessible-pipeline');
+const { args } = require('./helpers/parse-args');
+const { getViolations } = require('./helpers/parse-report-results');
+const { getViolationNodesCount } = require('./helpers/count-violation-nodes');
+const { violationGroupingReducer } = require('./helpers/group-violations');
+const { writeReportFile } = require('./helpers/write-report');
+const { displayResults } = require('./helpers/display-results');
+const {
+  log,
+  success,
+  warning,
+  error,
+  inverse,
+  danger
+} = require('./helpers/logger');
+const figlet = require('figlet');
+
+const defaultColumns = 80;
+const asciiLineWSBreaks = 4;
+
+const asciiLine = () => {
+  const cols = process.stdout.columns || defaultColumns;
+  return (
+    '\n'.repeat(asciiLineWSBreaks) +
+    '-'.repeat(cols) +
+    '\n'.repeat(asciiLineWSBreaks)
+  );
+};
 
 /**
  * @function runProgram
@@ -13,12 +33,6 @@ const { verifyRequiredArgs } = require("./helpers/verify-required-args");
  * @returns {void} Nothing since everything is output via logs or errors
  */
 async function runProgram() {
-  if (args.help === true) return log(help);
-  if (args.version === true) {
-    const version = require("../package.json").version;
-    return log(`Current version: ${version}`);
-  }
-  verifyRequiredArgs(args);
   const { results } = await crawler(args.site, args);
   const violations = getViolations(results);
   const violationsCount = getViolationNodesCount(violations);
@@ -33,12 +47,21 @@ async function runProgram() {
     );
   }
 
-  if (violationsCount === 0) return success("Well done, no violations found!");
-  if (args.displayResults === true) displayResults(violations);
+  log('\n');
+  log(figlet.textSync('Accessibility Report'));
+  log('Thanks for making the web accessible for everybody!');
+  log(asciiLine());
 
-  log(`Total accessibility issues: ${violationsCount}`);
-  log(`Average errors: ${averageErrors}`);
-  log(`Threshold: ${args.errorAverageThreshold}`);
+  if (violationsCount === 0) {
+    return success('Well done, no violations found!');
+  }
+
+  if (args.displayResults === true) {
+    showDetails(violations);
+    log(asciiLine());
+  }
+
+  showSummary({ pageCount, violationsCount, results });
 
   if (averageErrors > args.errorAverageThreshold) {
     error(
@@ -48,10 +71,48 @@ async function runProgram() {
   } else {
     warning(
       `CI run complete but ${violationsCount} ${
-        violations === 1 ? "issue" : "issues"
+        violations === 1 ? 'issue' : 'issues'
       } require review.`
     );
   }
+}
+
+function showDetails(violations) {
+  log(figlet.textSync('Details'));
+  displayResults(violations);
+}
+
+function showSummary({ pageCount, violationsCount, results }) {
+  log(figlet.textSync('Summary'));
+
+  log(`Accessibility report for ${args.site}\n`);
+  log(`Pages scanned: ${pageCount}`);
+
+  inverse(`Total accessibility issues: ${violationsCount}`);
+  log(`\n\n`);
+
+  const issuesByCategory = results && results.map(({ violations }) =>
+    violationGroupingReducer(violations)
+  );
+
+  const impactCategoryCounts = issuesByCategory.reduce(
+    (output, current) => {
+      for (let [impact, value] of Object.entries(current)) {
+        const exists = output.hasOwnProperty(impact);
+        if (exists === false) {
+          return output;
+        }
+        output[impact] += Object.keys(value).length;
+      }
+
+      return output;
+    },
+    { critical: 0, serious: 0, moderate: 0, minor: 0 }
+  );
+  error(`Critical Issues: ${impactCategoryCounts.critical}`);
+  warning(`Serious Issues: ${impactCategoryCounts.serious}`);
+  danger(`Moderate Issues: ${impactCategoryCounts.moderate}`);
+  log(`Minor Issues: ${impactCategoryCounts.minor}\n`);
 }
 
 module.exports = { runProgram };
