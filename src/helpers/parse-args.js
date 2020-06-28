@@ -1,6 +1,6 @@
 const commandLineArgs = require("command-line-args");
 const commandLineUsage = require("command-line-usage");
-const { error, info } = require("./logger");
+const { error, info, log } = require("./logger");
 const URL = require("url").URL;
 
 const args = [
@@ -118,8 +118,10 @@ const help = [
 const parsedArgs = commandLineArgs(options)._all;
 
 if (parsedArgs.help === false && parsedArgs.site instanceof URL === false) {
-  error(
-    `The --site or -s flag with a valid base url for crawling is required.\nExample: aci -s https://example.com\nFor more information: aci --help`
+  log(
+    error(
+      `The --site or -s flag with a valid base url for crawling is required.\nExample: aci -s https://example.com\nFor more information: aci --help`
+    )
   );
 
   process.exit(1);

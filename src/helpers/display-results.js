@@ -17,12 +17,13 @@ const { underline } = require("./text-transformers");
  */
 function displayResults(results) {
   results.forEach(({ violations, url }, index) => {
+    log('\n');
     log(
       colors.white(
         underline(`• Issues for: ${terminalLink("Page link", url)}`)
       )
     );
-    log("");
+    log('');
     const impactGroups = violationGroupingReducer(violations);
     for (const [impact, issuesByCategory] of Object.entries(impactGroups)) {
       outputIssueSectionTitle(impact);

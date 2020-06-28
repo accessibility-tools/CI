@@ -1,3 +1,4 @@
+const figlet = require('figlet');
 const { runCore: crawler } = require('accessible-pipeline');
 const { args } = require('./helpers/parse-args');
 const { faceHappy, faceSad } = require('./helpers/icons');
@@ -14,7 +15,6 @@ const {
   inverse,
   danger
 } = require('./helpers/logger');
-const figlet = require('figlet');
 
 const defaultColumns = 80;
 const asciiLineWSBreaks = 4;
@@ -70,7 +70,7 @@ function showSummary({ pageCount, violationsCount, results, averageErrors, viola
 
   if (violationsCount === 0) {
     log(faceHappy);
-    return success('Well done, no violations found!');
+    return log(success('Well done, no violations found!'));
   }
 
   log(faceSad);
@@ -78,7 +78,7 @@ function showSummary({ pageCount, violationsCount, results, averageErrors, viola
   log(`Accessibility report for ${args.site}\n`);
   log(`Pages scanned: ${pageCount}`);
 
-  inverse(`Total accessibility issues: ${violationsCount}`);
+  log(inverse(`Total accessibility issues: ${violationsCount}`));
   log(`\n\n`);
 
   const issuesByCategory = results && results.map(({ violations }) =>
@@ -99,21 +99,25 @@ function showSummary({ pageCount, violationsCount, results, averageErrors, viola
     },
     { critical: 0, serious: 0, moderate: 0, minor: 0 }
   );
-  error(`Critical Issues: ${impactCategoryCounts.critical}`);
-  danger(`Serious Issues: ${impactCategoryCounts.serious}`);
-  warning(`Moderate Issues: ${impactCategoryCounts.moderate}`);
+  log(error(`Critical Issues: ${impactCategoryCounts.critical}`));
+  log(danger(`Serious Issues: ${impactCategoryCounts.serious}`));
+  log(warning(`Moderate Issues: ${impactCategoryCounts.moderate}`));
   log(`Minor Issues: ${impactCategoryCounts.minor}\n`);
 
   if (averageErrors > args.errorAverageThreshold) {
-    error(
-      `CI Failed: Average errors of ${averageErrors} were above the defined threshold of ${args.errorAverageThreshold}`
+    log(
+      error(
+        `CI Failed: Average errors of ${averageErrors} were above the defined threshold of ${args.errorAverageThreshold}`
+      )
     );
     process.exitCode = 1;
   } else {
-    warning(
-      `CI run complete but ${violationsCount} ${
-        violations === 1 ? 'issue' : 'issues'
-      } require review.`
+    log(
+      warning(
+        `CI run complete but ${violationsCount} ${
+          violations === 1 ? 'issue' : 'issues'
+        } require review.`
+      )
     );
   }
 }

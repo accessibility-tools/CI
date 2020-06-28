@@ -2,6 +2,7 @@ const terminalLink = require("terminal-link");
 const { translateIssueGrouping } = require("./translate-issue-labels");
 const { logByIssueImpact, log } = require("./logger");
 const { capitaliseFirst, underline } = require("./text-transformers");
+const { mark } = require('./icons');
 
 /**
  * @function outputNodeInformation
@@ -65,8 +66,9 @@ function outputIssueNodeResults(issueGroup, impact) {
  */
 function outputIssueSectionTitle(impact) {
   const title = `${impact} issues`.toUpperCase();
-  logByIssueImpact(title, impact);
-  log("");
+  logByIssueImpact(title, impact, true);
+  logByIssueImpact(mark, impact);
+  log('');
 }
 
 module.exports = {
