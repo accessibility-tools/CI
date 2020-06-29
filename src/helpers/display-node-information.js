@@ -1,6 +1,6 @@
 const terminalLink = require('terminal-link');
 const { translateIssueGrouping } = require('./translate-issue-labels');
-const { logByIssueImpact, colorByIssueImpact, log } = require('./logger');
+const { logByIssueImpact, colorByIssueImpact, log, subtle } = require('./logger');
 const { capitaliseFirst, underline } = require('./text-transformers');
 const { mark } = require('./icons');
 
@@ -20,21 +20,17 @@ function outputNodeInformation(
   const title = capitaliseFirst(`Issue #${issueNumber}`);
   const summaryTitle = capitaliseFirst(`Issue summary`);
   const selectorTitle = capitaliseFirst(`Failing element(s) CSS selector`);
-  const standardsTitle = capitaliseFirst(`Failing standards`);
   const helpTitle = capitaliseFirst(`Get help with this issue`);
   const helpLink = terminalLink('Issue help url', helpUrl);
   const selectors = target.join(',\n');
-  const standards = tags.join(',\n');
 
-  logByIssueImpact({ message: underline(title), impact, isInversed: true });
-  log(underline(summaryTitle));
+  logByIssueImpact({ message: title, impact, isInversed: true });
+  log(subtle(summaryTitle));
   log(failureSummary);
-  log(underline(selectorTitle));
+  log(subtle(selectorTitle));
   log(selectors);
-  log(underline(helpTitle));
+  log(subtle(helpTitle));
   log(helpLink);
-  log(underline(standardsTitle));
-  log(standards);
   log('');
 }
 
@@ -49,6 +45,9 @@ function outputIssueNodeResults(issueGroup, impact) {
     const totalIssues = issues.length;
     const postFix = totalIssues === 1 ? 'issue' : 'issues';
     const { title, text } = translateIssueGrouping(group);
+    // TODO: potentially group-violations.js can be re-written, currently it is a quick fix
+    // standards are the same for every issue in the group, so it's enough to get standards of the first issue in a group and display it
+    const standards = issues[0] && issues[0].tags.join(',\n');
 
     const groupTitle = colorByIssueImpact({
       message: `${totalIssues.toString().padStart(2, '0')} ${capitaliseFirst(postFix)}:`,
@@ -58,6 +57,7 @@ function outputIssueNodeResults(issueGroup, impact) {
     log(groupTitle);
     log(text);
     log('Failed accessibility standards: ');
+    log(standards);
     log('');
 
     issues.forEach((issue, index) =>

@@ -19,6 +19,15 @@ function info(message) {
 }
 
 /**
+ * @function subtle
+ * @param {String} message
+ * @returns {String}
+ */
+function subtle(message) {
+  return colors.grey(message);
+}
+
+/**
  * @function inverse
  * @param {String} message
  * @returns {String}
@@ -101,6 +110,7 @@ function colorByIssueImpact({ message, impact, isInversed = false }) {
 module.exports = {
   log,
   info,
+  subtle,
   inverse,
   success,
   warning,
