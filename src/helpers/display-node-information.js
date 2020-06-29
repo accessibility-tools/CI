@@ -6,20 +6,20 @@ const {
   log,
   subtle
 } = require('./logger');
-const { capitaliseFirst, underline } = require('./text-transformers');
+const { capitaliseFirst } = require('./text-transformers');
 const { mark } = require('./icons');
 
 /**
  * @function outputNodeInformation
- * @param {Object} failureNode
- * @param {String} failureNode.impact
- * @param {String} failureNode.failureSummary
- * @param {Array<String>} failureNode.target
+ * @param {any} node
+ * @param {String} impact
+ * @param {String} node.failureSummary
+ * @param {Array<String>} node.target
  * @param {Number} nodeNumber
  * @returns {void}
  */
 function outputNodeInformation(
-  { failureSummary, target, impact, helpUrl, tags },
+  { failureSummary, target, impact },
   nodeNumber
 ) {
   const title = capitaliseFirst(`Issue #${nodeNumber}`);
@@ -44,39 +44,57 @@ function outputNodeInformation(
 function outputIssueNodeResults(issueGroup, impact) {
   for (const [groupId, groupValue] of Object.entries(issueGroup)) {
     const { nodes, tags, helpUrl } = groupValue;
-    const totalNodes = nodes.length;
-    const postFix = totalNodes === 1 ? 'issue' : 'issues';
-    const helpLink = terminalLink(
-      'Tools and resources to solve this issues',
-      helpUrl
-    );
-    const standards = tags.join(',\n');
 
-    const { title, text } = translateIssueGrouping(groupId);
-    const groupTitle =
-      colorByIssueImpact({
-        message: `${totalNodes.toString().padStart(2, '0')} ${capitaliseFirst(
-          postFix
-        )}:`,
-        impact,
-        isInversed: true
-      }) +
-      ' ' +
-      title;
-
-    log(groupTitle);
-    log(text);
-    log('');
-    log(helpLink);
-    log('');
-    log('Failed accessibility standards: ');
-    log(standards);
-    log('\n');
+    outputGroupInfo({ nodes, groupId, helpUrl, tags });
 
     nodes.forEach((node, index) => {
       outputNodeInformation({ ...node, impact }, index + 1);
     });
   }
+}
+
+/**
+ * @function outputGroupInfo
+ * @param {Array<any>} nodes
+ * @param {String} groupId
+ * @param {String} helpUrl
+ * @param {Array} tags
+ * @returns {void}
+ */
+function outputGroupInfo({
+  nodes,
+  groupId,
+  helpUrl,
+  tags
+}) {
+  const totalNodes = nodes.length;
+  const postFix = totalNodes === 1 ? 'issue' : 'issues';
+  const helpLink = terminalLink(
+    'Tools and resources to solve this issues',
+    helpUrl
+  );
+  const standards = tags.join(',\n');
+
+  const { title, text } = translateIssueGrouping(groupId);
+  const groupTitle =
+    colorByIssueImpact({
+      message: `${totalNodes.toString().padStart(2, '0')} ${capitaliseFirst(
+        postFix
+      )}:`,
+      impact,
+      isInversed: true
+    }) +
+    ' ' +
+    title;
+
+  log(groupTitle);
+  log(text);
+  log('');
+  log(helpLink);
+  log('');
+  log('Failed accessibility standards: ');
+  log(standards);
+  log('\n');
 }
 
 /**
