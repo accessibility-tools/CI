@@ -7,6 +7,7 @@ const { getViolationNodesCount } = require('./helpers/count-violation-nodes');
 const { violationGroupingReducer } = require('./helpers/group-violations');
 const { writeReportFile } = require('./helpers/write-report');
 const { displayResults } = require('./helpers/display-results');
+const { verifyRequiredArgs } = require('./helpers/verify-required-args');
 const {
   log,
   success,
@@ -34,6 +35,14 @@ const asciiLine = () => {
  * @returns {void} Nothing since everything is output via logs or errors
  */
 async function runProgram() {
+  if (args.help === true) return log(help);
+  if (args.version === true) {
+    const version = require('../package.json').version;
+    return log(`Current version: ${version}`);
+  }
+
+  verifyRequiredArgs(args);
+
   const { results } = await crawler(args.site, args);
   const violations = getViolations(results);
   const violationsCount = getViolationNodesCount(violations);

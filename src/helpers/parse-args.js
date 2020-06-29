@@ -1,7 +1,6 @@
 const URL = require('url').URL;
 const commandLineArgs = require('command-line-args');
 const commandLineUsage = require('command-line-usage');
-const { verifyRequiredArgs } = require('./verify-required-args');
 
 const args = [
   {
@@ -116,7 +115,6 @@ const help = [
 ];
 
 const parsedArgs = commandLineArgs(options)._all;
-verifyRequiredArgs(parsedArgs);
 
 module.exports = {
   args: parsedArgs,
