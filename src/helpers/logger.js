@@ -65,12 +65,21 @@ function error(message) {
 
 /**
  * @function logByIssueImpact
+ * @param {Object} args
+ * @returns {void}
+ */
+function logByIssueImpact(args) {
+  log(colorByIssueImpact(args));
+}
+
+/**
+ * @function colorByIssueImpact
  * @param {String} message
  * @param {String} impact
  * @param {Boolean} isInversed
- * @returns {void}
+ * @returns {String}
  */
-function logByIssueImpact(message, impact, isInversed = false) {
+function colorByIssueImpact({ message, impact, isInversed = false }) {
   let coloredMessage = message;
 
   if (impact === 'moderate') {
@@ -86,7 +95,7 @@ function logByIssueImpact(message, impact, isInversed = false) {
     coloredMessage = inverse(coloredMessage);
   }
 
-  log(coloredMessage);
+  return coloredMessage;
 }
 
 module.exports = {
@@ -97,5 +106,6 @@ module.exports = {
   warning,
   danger,
   error,
-  logByIssueImpact
+  logByIssueImpact,
+  colorByIssueImpact
 };

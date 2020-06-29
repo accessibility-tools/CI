@@ -1,6 +1,6 @@
 const terminalLink = require('terminal-link');
 const { translateIssueGrouping } = require('./translate-issue-labels');
-const { logByIssueImpact, log } = require('./logger');
+const { logByIssueImpact, colorByIssueImpact, log } = require('./logger');
 const { capitaliseFirst, underline } = require('./text-transformers');
 const { mark } = require('./icons');
 
@@ -26,7 +26,7 @@ function outputNodeInformation(
   const selectors = target.join(',\n');
   const standards = tags.join(',\n');
 
-  logByIssueImpact(underline(title), impact, true);
+  logByIssueImpact({ message: underline(title), impact, isInversed: true });
   log(underline(summaryTitle));
   log(failureSummary);
   log(underline(selectorTitle));
@@ -45,17 +45,21 @@ function outputNodeInformation(
  * @returns {void}
  */
 function outputIssueNodeResults(issueGroup, impact) {
-  for (const [index, [group, issues]] of Object.entries(Object.entries(issueGroup))) {
+  for (const [group, issues] of Object.entries(issueGroup)) {
     const totalIssues = issues.length;
     const postFix = totalIssues === 1 ? 'issue' : 'issues';
+    const { title, text } = translateIssueGrouping(group);
 
-    const title = capitaliseFirst(
-      `${translateIssueGrouping(group)} (${totalIssues} ${postFix})`
-    );
-    logByIssueImpact(capitaliseFirst(`Issue ${(parseInt(index) + 1).toString().padStart(2, '0')}`), impact, true);
-    log(underline(title));
+    const groupTitle = colorByIssueImpact({
+      message: `${totalIssues.toString().padStart(2, '0')} ${capitaliseFirst(postFix)}:`,
+      impact,
+      isInversed: true
+    }) + ' ' + title;
+    log(groupTitle);
+    log(text);
     log('Failed accessibility standards: ');
     log('');
+
     issues.forEach((issue, index) =>
       outputNodeInformation({ ...issue, impact }, index + 1)
     );
@@ -69,8 +73,8 @@ function outputIssueNodeResults(issueGroup, impact) {
  */
 function outputIssueSectionTitle(impact) {
   const title = `${impact} issues`.toUpperCase();
-  logByIssueImpact(title, impact, true);
-  logByIssueImpact(mark, impact);
+  logByIssueImpact({ message: title, impact, isInversed: true });
+  logByIssueImpact({ message: mark, impact });
   log('');
 }
 
