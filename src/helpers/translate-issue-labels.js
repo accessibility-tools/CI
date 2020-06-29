@@ -17,22 +17,23 @@ const issueTranslations = [
     original: 'aria-allowed-attr',
     translated: {
       title: 'Aria allowed attributes',
-      text: 'Ensure ARIA attributes are allowed for an element\'s role'
+      text: "Ensure ARIA attributes are allowed for an element's role"
     }
   },
   {
     original: 'aria-allowed-role',
     translated: {
       title: 'ARIA role attribute',
-      text: 'Ensure that the role attribute has an appropriate value for the element'
+      text:
+        'Ensure that the role attribute has an appropriate value for the element'
     }
-
   },
   {
     original: 'aria-dpub-role-fallback',
     translated: {
       title: 'ARIA DPUB roles fallback',
-      text: 'Ensure that unsupported DPUB roles are only used on elements with implicit fallback roles'
+      text:
+        'Ensure that unsupported DPUB roles are only used on elements with implicit fallback roles'
     }
   },
   {
@@ -67,14 +68,16 @@ const issueTranslations = [
     original: 'aria-required-children',
     translated: {
       title: 'ARIA required children',
-      text: 'Ensure elements with an ARIA role that require child roles contain them'
+      text:
+        'Ensure elements with an ARIA role that require child roles contain them'
     }
   },
   {
     original: 'aria-required-parent',
     translated: {
       title: 'ARIA required parent',
-      text: 'Ensure elements with an ARIA role that require parent roles are contained by them'
+      text:
+        'Ensure elements with an ARIA role that require parent roles are contained by them'
     }
   },
   {
@@ -116,14 +119,16 @@ const issueTranslations = [
     original: 'autocomplete-valid',
     translated: {
       title: 'Autocomplete attribute',
-      text: 'Ensure the autocomplete attribute is correct and suitable for the form field'
+      text:
+        'Ensure the autocomplete attribute is correct and suitable for the form field'
     }
   },
   {
     original: 'avoid-inline-spacing',
     translated: {
       title: 'Inline spacing',
-      text: 'Ensure that text spacing set through style attributes can be adjusted with custom stylesheets'
+      text:
+        'Ensure that text spacing set through style attributes can be adjusted with custom stylesheets'
     }
   },
   {
@@ -144,28 +149,32 @@ const issueTranslations = [
     original: 'bypass',
     translated: {
       title: 'Bypass',
-      text: 'Ensure each page has at least one mechanism for a user to bypass navigation and jump straight to the content'
+      text:
+        'Ensure each page has at least one mechanism for a user to bypass navigation and jump straight to the content'
     }
   },
   {
     original: 'checkboxgroup',
     translated: {
       title: 'Checkboxgroup',
-      text: 'Ensure related <input type="checkbox"> elements have a group and that the group designation is consistent'
+      text:
+        'Ensure related <input type="checkbox"> elements have a group and that the group designation is consistent'
     }
   },
   {
     original: 'color-contrast',
     translated: {
       title: 'Color contrast',
-      text: 'Ensure the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds'
+      text:
+        'Ensure the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds'
     }
   },
   {
     original: 'css-orientation-lock',
     translated: {
       title: 'CSS orientation lock',
-      text: 'Ensure content is not locked to any specific display orientation, and the content is operable in all display orientations'
+      text:
+        'Ensure content is not locked to any specific display orientation, and the content is operable in all display orientations'
     }
   },
   {
@@ -200,7 +209,8 @@ const issueTranslations = [
     original: 'duplicate-id-aria',
     translated: {
       title: 'Duplicated ARIA id',
-      text: 'Ensure every id attribute value used in ARIA and in labels is unique'
+      text:
+        'Ensure every id attribute value used in ARIA and in labels is unique'
     }
   },
   {
@@ -242,14 +252,16 @@ const issueTranslations = [
     original: 'frame-title-unique',
     translated: {
       title: 'Unique frame title',
-      text: 'Ensure <iframe> and <frame> elements contain a unique title attribute'
+      text:
+        'Ensure <iframe> and <frame> elements contain a unique title attribute'
     }
   },
   {
     original: 'frame-title',
     translated: {
       title: 'Frame title',
-      text: 'Ensure <iframe> and <frame> elements contain a non-empty title attribute'
+      text:
+        'Ensure <iframe> and <frame> elements contain a non-empty title attribute'
     }
   },
   {
@@ -284,14 +296,16 @@ const issueTranslations = [
     original: 'html-xml-lang-mismatch',
     translated: {
       title: 'Document lang mismatch',
-      text: 'Ensure that HTML elements with both valid lang and xml:lang attributes agree on the base language of the page'
+      text:
+        'Ensure that HTML elements with both valid lang and xml:lang attributes agree on the base language of the page'
     }
   },
   {
     original: 'image-alt',
     translated: {
       title: 'Image alternate text',
-      text: 'Ensure <img> elements have alternate text or a role of none or presentation'
+      text:
+        'Ensure <img> elements have alternate text or a role of none or presentation'
     }
   },
   {
@@ -319,14 +333,16 @@ const issueTranslations = [
     original: 'label-content-name-mismatch',
     translated: {
       title: 'Label content name mismatch',
-      text: 'Ensure that elements labelled through their content must have their visible text as part of their accessible name'
+      text:
+        'Ensure that elements labelled through their content must have their visible text as part of their accessible name'
     }
   },
   {
     original: 'label-title-only',
     translated: {
       title: 'Label title only',
-      text: 'Ensure that every form element is not solely labeled using the title or aria-describedby attributes'
+      text:
+        'Ensure that every form element is not solely labeled using the title or aria-describedby attributes'
     }
   },
   {
@@ -382,21 +398,24 @@ const issueTranslations = [
     original: 'landmark-one-main',
     translated: {
       title: 'Main landmark',
-      text: 'Ensure the document has only one main landmark and each iframe in the page has at most one main landmark'
+      text:
+        'Ensure the document has only one main landmark and each iframe in the page has at most one main landmark'
     }
   },
   {
     original: 'landmark-unique',
     translated: {
       title: 'Unique landmarks',
-      text: 'Landmarks must have a unique role or role/label/title (i.e. accessible name) combination'
+      text:
+        'Landmarks must have a unique role or role/label/title (i.e. accessible name) combination'
     }
   },
   {
     original: 'layout-table',
     translated: {
       title: 'Table layout',
-      text: 'Ensure presentational/layout <table> elements do not use <th>, <caption> elements or the summary attribute'
+      text:
+        'Ensure presentational/layout <table> elements do not use <th>, <caption> elements or the summary attribute'
     }
   },
   {
@@ -452,7 +471,8 @@ const issueTranslations = [
     original: 'meta-viewport',
     translated: {
       title: 'Scaling and zooming',
-      text: 'Ensure <meta name="viewport"> does not disable text scaling and zooming'
+      text:
+        'Ensure <meta name="viewport"> does not disable text scaling and zooming'
     }
   },
   {
@@ -473,14 +493,16 @@ const issueTranslations = [
     original: 'page-has-heading-one',
     translated: {
       title: 'Level-one heading',
-      text: 'Ensure that the page, or at least one of its frames contains a level-one heading'
+      text:
+        'Ensure that the page, or at least one of its frames contains a level-one heading'
     }
   },
   {
     original: 'radiogroup',
     translated: {
       title: 'Radiogroup',
-      text: 'Ensure related <input type="radio"> elements have a group and that the group designation is consistent'
+      text:
+        'Ensure related <input type="radio"> elements have a group and that the group designation is consistent'
     }
   },
   {
@@ -508,7 +530,8 @@ const issueTranslations = [
     original: 'scrollable-region-focusable',
     translated: {
       title: 'Scrollable content',
-      text: 'Elements that have scrollable content should be accessible by keyboard'
+      text:
+        'Elements that have scrollable content should be accessible by keyboard'
     }
   },
   {
@@ -550,14 +573,16 @@ const issueTranslations = [
     original: 'td-has-header',
     translated: {
       title: 'Table cell header',
-      text: 'Ensure that each non-empty data cell in a large table has one or more table headers'
+      text:
+        'Ensure that each non-empty data cell in a large table has one or more table headers'
     }
   },
   {
     original: 'td-headers-attr',
     translated: {
       title: 'Table cell headers attribute',
-      text: 'Ensure that each cell in a table using the headers refers to another cell in that table'
+      text:
+        'Ensure that each cell in a table using the headers refers to another cell in that table'
     }
   },
   {
