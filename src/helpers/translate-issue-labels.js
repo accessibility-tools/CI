@@ -1,371 +1,599 @@
 const issueTranslations = [
   {
-    original: "accesskeys",
-    translated: "Ensure every accesskey attribute value is unique"
+    original: 'accesskeys',
+    translated: {
+      title: 'Access keys',
+      text: 'Ensure every accesskey attribute value is unique'
+    }
   },
   {
-    original: "area-alt",
-    translated: "Ensure <area> elements have alternate text"
+    original: 'area-alt',
+    translated: {
+      title: 'Area alternate text',
+      text: 'Ensure <area> elements have alternate text'
+    }
   },
   {
-    original: "aria-allowed-attr",
-    translated: "Ensure ARIA attributes are allowed for an element's role"
+    original: 'aria-allowed-attr',
+    translated: {
+      title: 'Aria allowed attributes',
+      text: 'Ensure ARIA attributes are allowed for an element\'s role'
+    }
   },
   {
-    original: "aria-allowed-role",
-    translated:
-      "Ensure that the role attribute has an appropriate value for the element"
+    original: 'aria-allowed-role',
+    translated: {
+      title: 'ARIA role attribute',
+      text: 'Ensure that the role attribute has an appropriate value for the element'
+    }
+
   },
   {
-    original: "aria-dpub-role-fallback",
-    translated:
-      "Ensure that unsupported DPUB roles are only used on elements with implicit fallback roles"
+    original: 'aria-dpub-role-fallback',
+    translated: {
+      title: 'ARIA DPUB roles fallback',
+      text: 'Ensure that unsupported DPUB roles are only used on elements with implicit fallback roles'
+    }
   },
   {
-    original: "aria-hidden-body",
-    translated: "Ensure aria-hidden='true' is not present on the document body"
+    original: 'aria-hidden-body',
+    translated: {
+      title: 'ARIA hidden body',
+      text: 'Ensure aria-hidden="true" is not present on the document body'
+    }
   },
   {
-    original: "aria-hidden-focus",
-    translated: "Ensure aria-hidden elements do not contain focusable elements"
+    original: 'aria-hidden-focus',
+    translated: {
+      title: 'ARIA hidden elements',
+      text: 'Ensure aria-hidden elements do not contain focusable elements'
+    }
   },
   {
-    original: "aria-input-field-name",
-    translated: "Ensure every ARIA input field has an accessible name"
+    original: 'aria-input-field-name',
+    translated: {
+      title: 'ARIA input field name',
+      text: 'Ensure every ARIA input field has an accessible name'
+    }
   },
   {
-    original: "aria-required-attr",
-    translated:
-      "Ensure elements with ARIA roles have all required ARIA attributes"
+    original: 'aria-required-attr',
+    translated: {
+      title: 'ARIA required attributes',
+      text: 'Ensure elements with ARIA roles have all required ARIA attributes'
+    }
   },
   {
-    original: "aria-required-children",
-    translated:
-      "Ensure elements with an ARIA role that require child roles contain them"
+    original: 'aria-required-children',
+    translated: {
+      title: 'ARIA required children',
+      text: 'Ensure elements with an ARIA role that require child roles contain them'
+    }
   },
   {
-    original: "aria-required-parent",
-    translated:
-      "Ensure elements with an ARIA role that require parent roles are contained by them"
+    original: 'aria-required-parent',
+    translated: {
+      title: 'ARIA required parent',
+      text: 'Ensure elements with an ARIA role that require parent roles are contained by them'
+    }
   },
   {
-    original: "aria-roles",
-    translated: "Ensure all elements with a role attribute use a valid value"
+    original: 'aria-roles',
+    translated: {
+      title: 'ARIA roles valid value',
+      text: 'Ensure all elements with a role attribute use a valid value'
+    }
   },
   {
-    original: "aria-toggle-field-name",
-    translated: "Ensure every ARIA toggle field has an accessible name"
+    original: 'aria-toggle-field-name',
+    translated: {
+      title: 'ARIA toggle field',
+      text: 'Ensure every ARIA toggle field has an accessible name'
+    }
   },
   {
-    original: "aria-valid-attr-value",
-    translated: "Ensure all ARIA attributes have valid values"
+    original: 'aria-valid-attr-value',
+    translated: {
+      title: 'ARIA attributes value',
+      text: 'Ensure all ARIA attributes have valid values'
+    }
   },
   {
-    original: "aria-valid-attr",
-    translated:
-      "Ensure attributes that begin with aria- are valid ARIA attributes"
+    original: 'aria-valid-attr',
+    translated: {
+      title: 'ARIA attributes',
+      text: 'Ensure attributes that begin with aria- are valid ARIA attributes'
+    }
   },
   {
-    original: "audio-caption",
-    translated: "Ensure <audio> elements have captions"
+    original: 'audio-caption',
+    translated: {
+      title: 'Audio caption',
+      text: 'Ensure <audio> elements have captions'
+    }
   },
   {
-    original: "autocomplete-valid",
-    translated:
-      "Ensure the autocomplete attribute is correct and suitable for the form field"
+    original: 'autocomplete-valid',
+    translated: {
+      title: 'Autocomplete attribute',
+      text: 'Ensure the autocomplete attribute is correct and suitable for the form field'
+    }
   },
   {
-    original: "avoid-inline-spacing",
-    translated:
-      "Ensure that text spacing set through style attributes can be adjusted with custom stylesheets"
+    original: 'avoid-inline-spacing',
+    translated: {
+      title: 'Inline spacing',
+      text: 'Ensure that text spacing set through style attributes can be adjusted with custom stylesheets'
+    }
   },
-  { original: "blink", translated: "Ensure <blink> elements are not used" },
   {
-    original: "button-name",
-    translated: "Ensure buttons have discernible text"
+    original: 'blink',
+    translated: {
+      title: 'Blink element',
+      text: 'Ensure <blink> elements are not used'
+    }
   },
   {
-    original: "bypass",
-    translated:
-      "Ensure each page has at least one mechanism for a user to bypass navigation and jump straight to the content"
+    original: 'button-name',
+    translated: {
+      title: 'Button name',
+      text: 'Ensure buttons have discernible text'
+    }
   },
   {
-    original: "checkboxgroup",
-    translated:
-      'Ensure related <input type="checkbox"> elements have a group and that the group designation is consistent'
+    original: 'bypass',
+    translated: {
+      title: 'Bypass',
+      text: 'Ensure each page has at least one mechanism for a user to bypass navigation and jump straight to the content'
+    }
   },
   {
-    original: "color-contrast",
-    translated:
-      "Ensure the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds"
+    original: 'checkboxgroup',
+    translated: {
+      title: 'Checkboxgroup',
+      text: 'Ensure related <input type="checkbox"> elements have a group and that the group designation is consistent'
+    }
   },
   {
-    original: "css-orientation-lock",
-    translated:
-      "Ensure content is not locked to any specific display orientation, and the content is operable in all display orientations"
+    original: 'color-contrast',
+    translated: {
+      title: 'Color contrast',
+      text: 'Ensure the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds'
+    }
   },
   {
-    original: "definition-list",
-    translated: "Ensure <dl> elements are structured correctly"
+    original: 'css-orientation-lock',
+    translated: {
+      title: 'CSS orientation lock',
+      text: 'Ensure content is not locked to any specific display orientation, and the content is operable in all display orientations'
+    }
   },
   {
-    original: "dlitem",
-    translated: "Ensure <dt> and <dd> elements are contained by a <dl>"
+    original: 'definition-list',
+    translated: {
+      title: 'Definition list',
+      text: 'Ensure <dl> elements are structured correctly'
+    }
   },
   {
-    original: "document-title",
-    translated: "Ensure each HTML document contains a non-empty <title> element"
+    original: 'dlitem',
+    translated: {
+      title: 'DL item',
+      text: 'Ensure <dt> and <dd> elements are contained by a <dl>'
+    }
   },
   {
-    original: "duplicate-id-active",
-    translated: "Ensure every id attribute value of active elements is unique"
+    original: 'document-title',
+    translated: {
+      title: 'Document title',
+      text: 'Ensure each HTML document contains a non-empty <title> element'
+    }
   },
   {
-    original: "duplicate-id-aria",
-    translated:
-      "Ensure every id attribute value used in ARIA and in labels is unique"
+    original: 'duplicate-id-active',
+    translated: {
+      title: 'Active elements id',
+      text: 'Ensure every id attribute value of active elements is unique'
+    }
   },
   {
-    original: "duplicate-id",
-    translated: "Ensure every id attribute value is unique"
+    original: 'duplicate-id-aria',
+    translated: {
+      title: 'Duplicated ARIA id',
+      text: 'Ensure every id attribute value used in ARIA and in labels is unique'
+    }
   },
   {
-    original: "empty-heading",
-    translated: "Ensure headings have discernible text"
+    original: 'duplicate-id',
+    translated: {
+      title: 'Duplicated id',
+      text: 'Ensure every id attribute value is unique'
+    }
   },
   {
-    original: "focus-order-semantics",
-    translated: "Ensure elements in the focus order have an appropriate role"
+    original: 'empty-heading',
+    translated: {
+      title: 'Empty heading',
+      text: 'Ensure headings have discernible text'
+    }
   },
   {
-    original: "form-field-multiple-labels",
-    translated: "Ensure form field does not have multiple label elements"
+    original: 'focus-order-semantics',
+    translated: {
+      title: 'Focus order semantics',
+      text: 'Ensure elements in the focus order have an appropriate role'
+    }
   },
   {
-    original: "frame-tested",
-    translated:
-      "Ensure <iframe> and <frame> elements contain the axe-core script"
+    original: 'form-field-multiple-labels',
+    translated: {
+      title: 'Multiple form field labels',
+      text: 'Ensure form field does not have multiple label elements'
+    }
   },
   {
-    original: "frame-title-unique",
-    translated:
-      "Ensure <iframe> and <frame> elements contain a unique title attribute"
+    original: 'frame-tested',
+    translated: {
+      title: 'Frame tested',
+      text: 'Ensure <iframe> and <frame> elements contain the axe-core script'
+    }
   },
   {
-    original: "frame-title",
-    translated:
-      "Ensure <iframe> and <frame> elements contain a non-empty title attribute"
+    original: 'frame-title-unique',
+    translated: {
+      title: 'Unique frame title',
+      text: 'Ensure <iframe> and <frame> elements contain a unique title attribute'
+    }
   },
   {
-    original: "heading-order",
-    translated: "Ensure the order of headings is semantically correct"
+    original: 'frame-title',
+    translated: {
+      title: 'Frame title',
+      text: 'Ensure <iframe> and <frame> elements contain a non-empty title attribute'
+    }
   },
   {
-    original: "hidden-content",
-    translated: "Inform users about hidden content"
+    original: 'heading-order',
+    translated: {
+      title: 'Heading order',
+      text: 'Ensure the order of headings is semantically correct'
+    }
   },
   {
-    original: "html-has-lang",
-    translated: "Ensure every HTML document has a lang attribute"
+    original: 'hidden-content',
+    translated: {
+      title: 'Hidden content',
+      text: 'Inform users about hidden content'
+    }
   },
   {
-    original: "html-lang-valid",
-    translated:
-      "Ensure the lang attribute of the <html> element has a valid value"
+    original: 'html-has-lang',
+    translated: {
+      title: 'Document lang',
+      text: 'Ensure every HTML document has a lang attribute'
+    }
   },
   {
-    original: "html-xml-lang-mismatch",
-    translated:
-      "Ensure that HTML elements with both valid lang and xml:lang attributes agree on the base language of the page"
+    original: 'html-lang-valid',
+    translated: {
+      title: 'Valid document lang',
+      text: 'Ensure the lang attribute of the <html> element has a valid value'
+    }
   },
   {
-    original: "image-alt",
-    translated:
-      "Ensure <img> elements have alternate text or a role of none or presentation"
+    original: 'html-xml-lang-mismatch',
+    translated: {
+      title: 'Document lang mismatch',
+      text: 'Ensure that HTML elements with both valid lang and xml:lang attributes agree on the base language of the page'
+    }
   },
   {
-    original: "image-redundant-alt",
-    translated: "Ensure image alternative is not repeated as text"
+    original: 'image-alt',
+    translated: {
+      title: 'Image alternate text',
+      text: 'Ensure <img> elements have alternate text or a role of none or presentation'
+    }
   },
   {
-    original: "input-button-name",
-    translated: "Ensure that input buttons have discernible text"
+    original: 'image-redundant-alt',
+    translated: {
+      title: 'Redundant image alternative',
+      text: 'Ensure image alternative is not repeated as text'
+    }
   },
   {
-    original: "input-image-alt",
-    translated: 'Ensure <input type="image"> elements have alternate text'
+    original: 'input-button-name',
+    translated: {
+      title: 'Input button name',
+      text: 'Ensure that input buttons have discernible text'
+    }
   },
   {
-    original: "label-content-name-mismatch",
-    translated:
-      "Ensure that elements labelled through their content must have their visible text as part of their accessible name"
+    original: 'input-image-alt',
+    translated: {
+      title: 'Input image alternate text',
+      text: 'Ensure <input type="image"> elements have alternate text'
+    }
   },
   {
-    original: "label-title-only",
-    translated:
-      "Ensure that every form element is not solely labeled using the title or aria-describedby attributes"
+    original: 'label-content-name-mismatch',
+    translated: {
+      title: 'Label content name mismatch',
+      text: 'Ensure that elements labelled through their content must have their visible text as part of their accessible name'
+    }
   },
   {
-    original: "label",
-    translated: "Ensure that every form element has a label"
+    original: 'label-title-only',
+    translated: {
+      title: 'Label title only',
+      text: 'Ensure that every form element is not solely labeled using the title or aria-describedby attributes'
+    }
   },
   {
-    original: "landmark-banner-is-top-level",
-    translated: "Ensure the banner landmark is at top level"
+    original: 'label',
+    translated: {
+      title: 'Labels in a form',
+      text: 'Ensure that every form element has a label'
+    }
   },
   {
-    original: "landmark-complementary-is-top-level",
-    translated: "Ensure the complementary landmark or aside is at top level"
+    original: 'landmark-banner-is-top-level',
+    translated: {
+      title: 'Banner landmark position',
+      text: 'Ensure the banner landmark is at top level'
+    }
   },
   {
-    original: "landmark-contentinfo-is-top-level",
-    translated: "Ensure the contentinfo landmark is at top level"
+    original: 'landmark-complementary-is-top-level',
+    translated: {
+      title: 'Complementary landmark and aside position',
+      text: 'Ensure the complementary landmark or aside is at top level'
+    }
   },
   {
-    original: "landmark-main-is-top-level",
-    translated: "Ensure the main landmark is at top level"
+    original: 'landmark-contentinfo-is-top-level',
+    translated: {
+      title: 'Contentinfo landmark position',
+      text: 'Ensure the contentinfo landmark is at top level'
+    }
   },
   {
-    original: "landmark-no-duplicate-banner",
-    translated: "Ensure the document has at most one banner landmark"
+    original: 'landmark-main-is-top-level',
+    translated: {
+      title: 'Landmark position',
+      text: 'Ensure the main landmark is at top level'
+    }
   },
   {
-    original: "landmark-no-duplicate-contentinfo",
-    translated: "Ensure the document has at most one contentinfo landmark"
+    original: 'landmark-no-duplicate-banner',
+    translated: {
+      title: 'Banner landmark',
+      text: 'Ensure the document has at most one banner landmark'
+    }
   },
   {
-    original: "landmark-one-main",
-    translated:
-      "Ensure the document has only one main landmark and each iframe in the page has at most one main landmark"
+    original: 'landmark-no-duplicate-contentinfo',
+    translated: {
+      title: 'One contentinfo landmark',
+      text: 'Ensure the document has at most one contentinfo landmark'
+    }
   },
   {
-    original: "landmark-unique",
-    translated:
-      "Landmarks must have a unique role or role/label/title (i.e. accessible name) combination"
+    original: 'landmark-one-main',
+    translated: {
+      title: 'Main landmark',
+      text: 'Ensure the document has only one main landmark and each iframe in the page has at most one main landmark'
+    }
   },
   {
-    original: "layout-table",
-    translated:
-      "Ensure presentational/layout <table> elements do not use <th>, <caption> elements or the summary attribute"
+    original: 'landmark-unique',
+    translated: {
+      title: 'Unique landmarks',
+      text: 'Landmarks must have a unique role or role/label/title (i.e. accessible name) combination'
+    }
   },
   {
-    original: "link-in-text-block",
-    translated: "Links can be distinguished without relying on color"
+    original: 'layout-table',
+    translated: {
+      title: 'Table layout',
+      text: 'Ensure presentational/layout <table> elements do not use <th>, <caption> elements or the summary attribute'
+    }
   },
-  { original: "link-name", translated: "Ensure links have discernible text" },
   {
-    original: "list",
-    translated: "Ensure that lists are structured correctly"
+    original: 'link-in-text-block',
+    translated: {
+      title: 'Link representation',
+      text: 'Links can be distinguished without relying on color'
+    }
   },
   {
-    original: "listitem",
-    translated: "Ensure <li> elements are used semantically"
+    original: 'link-name',
+    translated: {
+      title: 'Link name',
+      text: 'Ensure links have discernible text'
+    }
   },
   {
-    original: "marquee",
-    translated: "Ensure <marquee> elements are not used"
+    original: 'list',
+    translated: {
+      title: 'List structure',
+      text: 'Ensure that lists are structured correctly'
+    }
   },
   {
-    original: "meta-refresh",
-    translated: 'Ensure <meta http-equiv="refresh"> is not used'
+    original: 'listitem',
+    translated: {
+      title: 'Listitem',
+      text: 'Ensure <li> elements are used semantically'
+    }
   },
   {
-    original: "meta-viewport-large",
-    translated: 'Ensure <meta name="viewport"> can scale a significant amount'
+    original: 'marquee',
+    translated: {
+      title: 'Marquee usage',
+      text: 'Ensure <marquee> elements are not used'
+    }
   },
   {
-    original: "meta-viewport",
-    translated:
-      'Ensure <meta name="viewport"> does not disable text scaling and zooming'
+    original: 'meta-refresh',
+    translated: {
+      title: 'Refresh usage',
+      text: 'Ensure <meta http-equiv="refresh"> is not used'
+    }
   },
   {
-    original: "object-alt",
-    translated: "Ensure <object> elements have alternate text"
+    original: 'meta-viewport-large',
+    translated: {
+      title: 'Large scale',
+      text: 'Ensure <meta name="viewport"> can scale a significant amount'
+    }
   },
   {
-    original: "p-as-heading",
-    translated: "Ensure p elements are not used to style headings"
+    original: 'meta-viewport',
+    translated: {
+      title: 'Scaling and zooming',
+      text: 'Ensure <meta name="viewport"> does not disable text scaling and zooming'
+    }
   },
   {
-    original: "page-has-heading-one",
-    translated:
-      "Ensure that the page, or at least one of its frames contains a level-one heading"
+    original: 'object-alt',
+    translated: {
+      title: 'Object alternate text',
+      text: 'Ensure <object> elements have alternate text'
+    }
   },
   {
-    original: "radiogroup",
-    translated:
-      'Ensure related <input type="radio"> elements have a group and that the group designation is consistent'
+    original: 'p-as-heading',
+    translated: {
+      title: 'P elements as heading',
+      text: 'Ensure p elements are not used to style headings'
+    }
   },
   {
-    original: "region",
-    translated: "Ensure all page content is contained by landmarks"
+    original: 'page-has-heading-one',
+    translated: {
+      title: 'Level-one heading',
+      text: 'Ensure that the page, or at least one of its frames contains a level-one heading'
+    }
   },
   {
-    original: "role-img-alt",
-    translated: "Ensure [role='img'] elements have alternate text"
+    original: 'radiogroup',
+    translated: {
+      title: 'Radiogroup',
+      text: 'Ensure related <input type="radio"> elements have a group and that the group designation is consistent'
+    }
   },
   {
-    original: "scope-attr-valid",
-    translated: "Ensure the scope attribute is used correctly on tables"
+    original: 'region',
+    translated: {
+      title: 'Region',
+      text: 'Ensure all page content is contained by landmarks'
+    }
   },
   {
-    original: "scrollable-region-focusable",
-    translated:
-      "Elements that have scrollable content should be accessible by keyboard"
+    original: 'role-img-alt',
+    translated: {
+      title: 'Role image alternate text',
+      text: 'Ensure [role="img"] elements have alternate text'
+    }
   },
   {
-    original: "server-side-image-map",
-    translated: "Ensure that server-side image maps are not used"
+    original: 'scope-attr-valid',
+    translated: {
+      title: 'Scope attribute',
+      text: 'Ensure the scope attribute is used correctly on tables'
+    }
   },
   {
-    original: "skip-link",
-    translated: "Ensure all skip links have a focusable target"
+    original: 'scrollable-region-focusable',
+    translated: {
+      title: 'Scrollable content',
+      text: 'Elements that have scrollable content should be accessible by keyboard'
+    }
   },
   {
-    original: "tabindex",
-    translated: "Ensure tabindex attribute values are not greater than 0"
+    original: 'server-side-image-map',
+    translated: {
+      title: 'Server side image maps',
+      text: 'Ensure that server-side image maps are not used'
+    }
   },
   {
-    original: "table-duplicate-name",
-    translated: "Ensure that tables do not have the same summary and caption"
+    original: 'skip-link',
+    translated: {
+      title: 'Skip link',
+      text: 'Ensure all skip links have a focusable target'
+    }
   },
   {
-    original: "table-fake-caption",
-    translated: "Ensure that tables with a caption use the <caption> element"
+    original: 'tabindex',
+    translated: {
+      title: 'Tabindex',
+      text: 'Ensure tabindex attribute values are not greater than 0'
+    }
   },
   {
-    original: "td-has-header",
-    translated:
-      "Ensure that each non-empty data cell in a large table has one or more table headers"
+    original: 'table-duplicate-name',
+    translated: {
+      title: 'Table duplicate names',
+      text: 'Ensure that tables do not have the same summary and caption'
+    }
   },
   {
-    original: "td-headers-attr",
-    translated:
-      "Ensure that each cell in a table using the headers refers to another cell in that table"
+    original: 'table-fake-caption',
+    translated: {
+      title: 'Table fake caption',
+      text: 'Ensure that tables with a caption use the <caption> element'
+    }
   },
   {
-    original: "th-has-data-cells",
-    translated:
-      "Ensure that each table header in a data table refers to data cells"
+    original: 'td-has-header',
+    translated: {
+      title: 'Table cell header',
+      text: 'Ensure that each non-empty data cell in a large table has one or more table headers'
+    }
   },
   {
-    original: "valid-lang",
-    translated: "Ensure lang attributes have valid values"
+    original: 'td-headers-attr',
+    translated: {
+      title: 'Table cell headers attribute',
+      text: 'Ensure that each cell in a table using the headers refers to another cell in that table'
+    }
   },
   {
-    original: "video-caption",
-    translated: "Ensure <video> elements have captions"
+    original: 'th-has-data-cells',
+    translated: {
+      title: 'Table header',
+      text: 'Ensure that each table header in a data table refers to data cells'
+    }
   },
   {
-    original: "video-description",
-    translated: "Ensure <video> elements have audio descriptions"
+    original: 'valid-lang',
+    translated: {
+      title: 'Valid lang attributes',
+      text: 'Ensure lang attributes have valid values'
+    }
+  },
+  {
+    original: 'video-caption',
+    translated: {
+      title: 'Video caption',
+      text: 'Ensure <video> elements have captions'
+    }
+  },
+  {
+    original: 'video-description',
+    translated: {
+      title: 'Video description',
+      text: 'Ensure <video> elements have audio descriptions'
+    }
   }
 ];
 
 /**
  * @function translateIssueGrouping
  * @param {String} translateKey
- * @returns {String} the report label translated into a more human readable format
+ * @returns {Object} the report label translated into a more human readable format
  */
 function translateIssueGrouping(translateKey) {
   try {
@@ -375,7 +603,7 @@ function translateIssueGrouping(translateKey) {
 
     return translated;
   } catch (error) {
-    return translateKey;
+    return { title: translateKey, text: translateKey };
   }
 }
 

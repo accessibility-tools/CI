@@ -1,12 +1,12 @@
-const terminalLink = require("terminal-link");
-const colors = require("colors");
-const { violationGroupingReducer } = require("./group-violations");
+const terminalLink = require('terminal-link');
+const colors = require('colors');
+const { violationGroupingReducer } = require('./group-violations');
 const {
   outputIssueNodeResults,
   outputIssueSectionTitle
-} = require("./display-node-information");
-const { log } = require("./logger");
-const { underline } = require("./text-transformers");
+} = require('./display-node-information');
+const { log } = require('./logger');
+const { underline } = require('./text-transformers');
 
 /**
  * @function displayResults
@@ -17,12 +17,13 @@ const { underline } = require("./text-transformers");
  */
 function displayResults(results) {
   results.forEach(({ violations, url }, index) => {
+    log('\n');
     log(
-      colors.bgWhite.black(
-        underline(`• Issues for: ${terminalLink("Page link", url)}`)
+      colors.white(
+        underline(`• Issues for: ${terminalLink('Page link', url)}`)
       )
     );
-    log("");
+    log('');
     const impactGroups = violationGroupingReducer(violations);
     for (const [impact, issuesByCategory] of Object.entries(impactGroups)) {
       outputIssueSectionTitle(impact);

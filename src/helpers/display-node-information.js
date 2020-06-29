@@ -1,7 +1,8 @@
-const terminalLink = require("terminal-link");
-const { translateIssueGrouping } = require("./translate-issue-labels");
-const { logByIssueImpact, log } = require("./logger");
-const { capitaliseFirst, underline } = require("./text-transformers");
+const terminalLink = require('terminal-link');
+const { translateIssueGrouping } = require('./translate-issue-labels');
+const { logByIssueImpact, colorByIssueImpact, log, subtle } = require('./logger');
+const { capitaliseFirst, underline } = require('./text-transformers');
+const { mark } = require('./icons');
 
 /**
  * @function outputNodeInformation
@@ -19,22 +20,18 @@ function outputNodeInformation(
   const title = capitaliseFirst(`Issue #${issueNumber}`);
   const summaryTitle = capitaliseFirst(`Issue summary`);
   const selectorTitle = capitaliseFirst(`Failing element(s) CSS selector`);
-  const standardsTitle = capitaliseFirst(`Failing standards`);
   const helpTitle = capitaliseFirst(`Get help with this issue`);
-  const helpLink = terminalLink("Issue help url", helpUrl);
-  const selectors = target.join(",\n");
-  const standards = tags.join(",\n");
+  const helpLink = terminalLink('Issue help url', helpUrl);
+  const selectors = target.join(',\n');
 
-  logByIssueImpact(underline(title), impact);
-  logByIssueImpact(underline(summaryTitle), impact);
-  logByIssueImpact(failureSummary, impact);
-  logByIssueImpact(underline(selectorTitle), impact);
-  logByIssueImpact(selectors, impact);
-  logByIssueImpact(underline(helpTitle), impact);
-  logByIssueImpact(helpLink, impact);
-  logByIssueImpact(underline(standardsTitle), impact);
-  logByIssueImpact(standards, impact);
-  log("");
+  logByIssueImpact({ message: title, impact, isInversed: true });
+  log(subtle(summaryTitle));
+  log(failureSummary);
+  log(subtle(selectorTitle));
+  log(selectors);
+  log(subtle(helpTitle));
+  log(helpLink);
+  log('');
 }
 
 /**
@@ -46,12 +43,23 @@ function outputNodeInformation(
 function outputIssueNodeResults(issueGroup, impact) {
   for (const [group, issues] of Object.entries(issueGroup)) {
     const totalIssues = issues.length;
-    const postFix = totalIssues === 1 ? "issue" : "issues";
-    const title = capitaliseFirst(
-      `• ${translateIssueGrouping(group)} (${totalIssues} ${postFix})`
-    );
-    logByIssueImpact(underline(title), impact);
-    log("");
+    const postFix = totalIssues === 1 ? 'issue' : 'issues';
+    const { title, text } = translateIssueGrouping(group);
+    // TODO: potentially group-violations.js can be re-written, currently it is a quick fix
+    // standards are the same for every issue in the group, so it's enough to get standards of the first issue in a group and display it
+    const standards = issues[0] && issues[0].tags.join(',\n');
+
+    const groupTitle = colorByIssueImpact({
+      message: `${totalIssues.toString().padStart(2, '0')} ${capitaliseFirst(postFix)}:`,
+      impact,
+      isInversed: true
+    }) + ' ' + title;
+    log(groupTitle);
+    log(text);
+    log('Failed accessibility standards: ');
+    log(standards);
+    log('');
+
     issues.forEach((issue, index) =>
       outputNodeInformation({ ...issue, impact }, index + 1)
     );
@@ -65,8 +73,9 @@ function outputIssueNodeResults(issueGroup, impact) {
  */
 function outputIssueSectionTitle(impact) {
   const title = `${impact} issues`.toUpperCase();
-  logByIssueImpact(title, impact);
-  log("");
+  logByIssueImpact({ message: title, impact, isInversed: true });
+  logByIssueImpact({ message: mark, impact });
+  log('');
 }
 
 module.exports = {

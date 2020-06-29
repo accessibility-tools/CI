@@ -1,9 +1,9 @@
 const {
   promises: { open, writeFile, mkdir },
   existsSync
-} = require("fs");
-const path = require("path");
-const mkdirp = require("mkdirp");
+} = require('fs');
+const path = require('path');
+const mkdirp = require('mkdirp');
 
 /**
  * @function writeReportFile
@@ -13,11 +13,11 @@ const mkdirp = require("mkdirp");
  * @param {String} outputFileName
  * @returns {Promise<Boolean>} Representing if the file was written or not
  */
-async function writeReportFile(results, outputPath = "", outputFileName) {
+async function writeReportFile(results, outputPath = '', outputFileName) {
   if (!outputFileName) return false;
 
-  const root = process.cwd().replace(/\/$/, "");
-  const outdir = outputPath.replace(/\/$/, "");
+  const root = process.cwd().replace(/\/$/, '');
+  const outdir = outputPath.replace(/\/$/, '');
   const outpath = path.join(root, outdir);
 
   if (existsSync(outpath) === false) {

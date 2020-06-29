@@ -1,4 +1,4 @@
-const colors = require("colors");
+const colors = require('colors');
 
 /**
  * @function log
@@ -12,67 +12,110 @@ function log(message) {
 /**
  * @function info
  * @param {String} message
- * @returns {void}
+ * @returns {String}
  */
 function info(message) {
-  console.log(colors.blue(message));
+  return colors.blue(message);
+}
+
+/**
+ * @function subtle
+ * @param {String} message
+ * @returns {String}
+ */
+function subtle(message) {
+  return colors.grey(message);
+}
+
+/**
+ * @function inverse
+ * @param {String} message
+ * @returns {String}
+ */
+function inverse(message) {
+  return colors.inverse(message);
 }
 
 /**
  * @function success
  * @param {String} message
- * @returns {void}
+ * @returns {String}
  */
 function success(message) {
-  console.log(colors.green(message));
+  return colors.green(message);
 }
 
 /**
  * @function warning
  * @param {String} message
- * @returns {void}
+ * @returns {String}
  */
 function warning(message) {
-  console.log(colors.yellow(message));
+  return colors.magenta(message);
 }
 
 /**
  * @function danger
  * @param {String} message
- * @returns {void}
+ * @returns {String}
  */
 function danger(message) {
-  console.log(colors.magenta(message));
+  return colors.yellow(message);
 }
 
 /**
  * @function error
  * @param {String} message
- * @returns {void}
+ * @returns {String}
  */
 function error(message) {
-  console.log(colors.red(message));
+  return colors.red(message);
 }
 
 /**
  * @function logByIssueImpact
- * @param {String} message
- * @param {String} impact
+ * @param {Object} args
  * @returns {void}
  */
-function logByIssueImpact(message, impact) {
-  if (impact === "minor") log(message);
-  if (impact === "moderate") warning(message);
-  if (impact === "serious") danger(message);
-  if (impact === "critical") error(message);
+function logByIssueImpact(args) {
+  log(colorByIssueImpact(args));
+}
+
+/**
+ * @function colorByIssueImpact
+ * @param {String} message
+ * @param {String} impact
+ * @param {Boolean} isInversed
+ * @returns {String}
+ */
+function colorByIssueImpact({ message, impact, isInversed = false }) {
+  let coloredMessage = message;
+
+  if (impact === 'moderate') {
+    coloredMessage = warning(message);
+  }
+  if (impact === 'serious') {
+    coloredMessage = danger(message);
+  }
+  if (impact === 'critical') {
+    coloredMessage = error(message);
+  }
+  if (isInversed) {
+    coloredMessage = inverse(coloredMessage);
+  }
+
+  return coloredMessage;
 }
 
 module.exports = {
   log,
   info,
+  subtle,
+  inverse,
   success,
   warning,
   danger,
   error,
-  logByIssueImpact
+  logByIssueImpact,
+  colorByIssueImpact
 };
