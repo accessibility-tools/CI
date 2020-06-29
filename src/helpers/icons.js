@@ -40,4 +40,4 @@ module.exports = {
   faceHappy,
   faceSad,
   mark
-}
+};

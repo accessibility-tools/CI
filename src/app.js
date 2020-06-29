@@ -66,7 +66,13 @@ async function runProgram() {
     log(asciiLine());
   }
 
-  showSummary({ pageCount, violationsCount, results, averageErrors, violations });
+  showSummary({
+    pageCount,
+    violationsCount,
+    results,
+    averageErrors,
+    violations
+  });
 }
 
 function showDetails(violations) {
@@ -74,7 +80,13 @@ function showDetails(violations) {
   displayResults(violations);
 }
 
-function showSummary({ pageCount, violationsCount, results, averageErrors, violations }) {
+function showSummary({
+  pageCount,
+  violationsCount,
+  results,
+  averageErrors,
+  violations
+}) {
   log(figlet.textSync('Summary'));
 
   if (violationsCount === 0) {
@@ -90,9 +102,9 @@ function showSummary({ pageCount, violationsCount, results, averageErrors, viola
   log(inverse(`Total accessibility issues: ${violationsCount}`));
   log(`\n\n`);
 
-  const issuesByCategory = results && results.map(({ violations }) =>
-    violationGroupingReducer(violations)
-  );
+  const issuesByCategory =
+    results &&
+    results.map(({ violations }) => violationGroupingReducer(violations));
 
   const impactCategoryCounts = issuesByCategory.reduce(
     (output, current) => {

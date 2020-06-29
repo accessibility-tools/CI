@@ -6,12 +6,19 @@
 function violationGroupingReducer(violations) {
   return violations.reduce(
     (accumulator, { nodes, id, impact, helpUrl, tags }) => {
-      nodes.forEach(node => {
-        if (!accumulator[impact]) accumulator[impact] = {};
-        if (!accumulator[impact][id]) accumulator[impact][id] = [];
-        const issueNode = { ...node, helpUrl, tags };
-        accumulator[impact][id].push(issueNode);
-      });
+      if (!accumulator[impact]) {
+        accumulator[impact] = {};
+      }
+      if (!accumulator[impact][id]) {
+        accumulator[impact][id] = { nodes: [] };
+      }
+
+      accumulator[impact][id] = {
+        helpUrl,
+        tags,
+        nodes: [...nodes, ...accumulator[impact][id].nodes]
+      };
+
       return accumulator;
     },
     {}
