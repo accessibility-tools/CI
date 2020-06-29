@@ -160,3 +160,4 @@ This project is licensed under the MIT License - see the [Licence file](./LICENC
 - [James Robb](https://jamesrobb.co.uk/)
 - [Fotis Papadogeorgopoulos](https://fotis.xyz/)
 - [James Stone](http://jamesstone.com/)
+- [Egor Sorokin](https://egor-sorokin.github.io/website/)
