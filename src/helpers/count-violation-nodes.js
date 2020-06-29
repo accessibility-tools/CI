@@ -1,6 +1,6 @@
 /**
  * @function countViolationNodes
- * @param {Array<Object>} violations
+ * @param {Array<any>} violations
  * @returns {Number} the count of html nodes per url grouping with violations
  */
 function countViolationNodes(violations) {
@@ -19,7 +19,7 @@ function countViolationNodes(violations) {
 function getViolationNodesCount(results) {
   return results.reduce((accumulator, current) => {
     const { violations } = current;
-    const nodeCount = countViolationNodes(violations, 0);
+    const nodeCount = countViolationNodes(violations);
     return accumulator + nodeCount;
   }, 0);
 }
