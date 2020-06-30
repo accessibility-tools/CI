@@ -45,7 +45,7 @@ function outputIssueNodeResults(issueGroup, impact) {
   for (const [groupId, groupValue] of Object.entries(issueGroup)) {
     const { nodes, tags, helpUrl } = groupValue;
 
-    outputGroupInfo({ nodes, groupId, helpUrl, tags });
+    outputGroupInfo({ nodes, groupId, helpUrl, tags, impact });
 
     nodes.forEach((node, index) => {
       outputNodeInformation({ ...node, impact }, index + 1);
@@ -65,7 +65,8 @@ function outputGroupInfo({
   nodes,
   groupId,
   helpUrl,
-  tags
+  tags,
+  impact
 }) {
   const totalNodes = nodes.length;
   const postFix = totalNodes === 1 ? 'issue' : 'issues';
