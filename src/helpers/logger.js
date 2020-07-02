@@ -1,4 +1,5 @@
 const colors = require('colors');
+const indentString = require('indent-string');
 
 /**
  * @function log
@@ -107,6 +108,10 @@ function colorByIssueImpact({ message, impact, isInversed = false }) {
   return coloredMessage;
 }
 
+function logWithIndent(str, indent = 0) {
+  log(indentString(str, indent));
+}
+
 module.exports = {
   log,
   info,
@@ -116,6 +121,7 @@ module.exports = {
   warning,
   danger,
   error,
+  logWithIndent,
   logByIssueImpact,
   colorByIssueImpact
 };
