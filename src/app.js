@@ -35,7 +35,9 @@ const asciiLine = () => {
  * @returns {void} Nothing since everything is output via logs or errors
  */
 async function runProgram() {
-  if (args.help === true) return log(help);
+  if (args.help === true) {
+    return log(help);
+  }
   if (args.version === true) {
     const version = require('../package.json').version;
     return log(`Current version: ${version}`);
@@ -108,18 +110,17 @@ function showSummary({
 
   const impactCategoryCounts = issuesByCategory.reduce(
     (output, current) => {
-      for (let [impact, value] of Object.entries(current)) {
-        const exists = output.hasOwnProperty(impact);
-        if (exists === false) {
-          return output;
+      for (let [impact, values] of Object.entries(current)) {
+        for (let [issueKey, issue] of Object.entries(values)) {
+          output[impact] += issue.nodes && issue.nodes.length;
         }
-        output[impact] += Object.keys(value).length;
       }
 
       return output;
     },
     { critical: 0, serious: 0, moderate: 0, minor: 0 }
   );
+
   log(error(`Critical Issues: ${impactCategoryCounts.critical}`));
   log(danger(`Serious Issues: ${impactCategoryCounts.serious}`));
   log(warning(`Moderate Issues: ${impactCategoryCounts.moderate}`));
