@@ -1,6 +1,7 @@
 const terminalLink = require('terminal-link');
 const { translateIssueGrouping } = require('./translate-issue-labels');
 const {
+  logWithIndent,
   logByIssueImpact,
   colorByIssueImpact,
   log,
@@ -22,17 +23,17 @@ function outputNodeInformation(
   { failureSummary, target, impact },
   nodeNumber
 ) {
-  const title = capitaliseFirst(`Issue #${nodeNumber}`);
+  const title = capitaliseFirst(`Required fix #${nodeNumber}`);
   const summaryTitle = capitaliseFirst(`Issue summary`);
   const selectorTitle = capitaliseFirst(`Failing element(s) CSS selector`);
   const selectors = target.join(',\n');
 
-  logByIssueImpact({ message: title, impact, isInversed: true });
-  log(subtle(summaryTitle));
-  log(failureSummary);
-  log(subtle(selectorTitle));
-  log(selectors);
-  log('');
+  logWithIndent(colorByIssueImpact({ message: title, impact, isInversed: true }), 2);
+  logWithIndent(subtle(summaryTitle), 4);
+  logWithIndent(failureSummary, 6);
+  logWithIndent(subtle(selectorTitle), 4);
+  logWithIndent(selectors, 6);
+  log('\n');
 }
 
 /**
