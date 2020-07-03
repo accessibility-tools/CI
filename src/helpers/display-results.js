@@ -12,8 +12,7 @@ const {
  * @returns {void}
  */
 function displayResults(results) {
-  const violations = results.map(({ violations }) => violations).flat();
-  const impactGroups = violationGroupingReducer(violations);
+  const impactGroups = violationGroupingReducer(results);
 
   for (const [impact, issuesByCategory] of Object.entries(impactGroups)) {
     outputIssueSectionTitle(impact);

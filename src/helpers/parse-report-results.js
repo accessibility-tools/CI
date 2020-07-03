@@ -1,23 +1,15 @@
 /**
- * @function getViolations
- * @description Returns the violations for each url that had problems during the test run
+ * @function getViolationsInfo
+ * @description Returns all violations and all page urls that had problems during the test run
  * @param {AxeResults[]} data
- * @returns {Array<Object>} Each item represents an issue and contains the url where the issue was found and the violations for that url
+ * @returns {Object} Violations and page urls where this violations were found
  */
-function getViolations(data) {
-  return data
-    .map(item => {
-      if (!item.violations || item.violations.length <= 0) {
-        return null;
-      }
-
-      const { url, violations } = item;
-      return {
-        url,
-        violations
-      };
-    })
-    .filter(Boolean);
+function getViolationsInfo(data) {
+  return data.reduce((acc, { violations, url }) =>
+    violations && violations.length > 0 && {
+      violations: [...acc.violations, ...violations],
+      pageUrls: [...acc.pageUrls, url]
+    }, { violations: [], pageUrls: [] });
 }
 
-module.exports = { getViolations };
+module.exports = { getViolationsInfo };

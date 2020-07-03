@@ -1,9 +1,8 @@
 const figlet = require('figlet');
 const { runCore: crawler } = require('accessible-pipeline');
-const { args } = require('./helpers/parse-args');
+const { args, help } = require('./helpers/parse-args');
 const { faceHappy, faceSad } = require('./helpers/icons');
-const { getViolations } = require('./helpers/parse-report-results');
-const { getViolationNodesCount } = require('./helpers/count-violation-nodes');
+const { getViolationsInfo } = require('./helpers/parse-report-results');
 const { violationGroupingReducer } = require('./helpers/group-violations');
 const { writeReportFile } = require('./helpers/write-report');
 const { displayResults } = require('./helpers/display-results');
@@ -46,9 +45,10 @@ async function runProgram() {
   verifyRequiredArgs(args);
 
   const { results } = await crawler(args.site, args);
-  const violations = getViolations(results);
-  const violationsCount = getViolationNodesCount(violations);
-  const pageCount = violations.length;
+  const { pageUrls, violations } = getViolationsInfo(results);
+  const nodes = violations.map(({ nodes }) => nodes).flat();
+  const violationsCount = nodes.length;
+  const pageCount = pageUrls.length;
   const averageErrors = Math.round((violationsCount / pageCount) * 100) / 100;
 
   if (args.outputFileName) {
