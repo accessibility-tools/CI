@@ -20,7 +20,7 @@ function getViolationsInfo(data) {
  */
 function mapViolationsToCategory(violations) {
   return violations.reduce(
-    (acc, { nodes, id, impact, helpUrl, tags }) => {
+    (acc, { nodes, id, impact, help, description, helpUrl, tags }) => {
       if (!acc[impact]) {
         acc[impact] = {};
       }
@@ -34,8 +34,10 @@ function mapViolationsToCategory(violations) {
         acc[impact][id] = {
           id,
           helpUrl,
+          description,
           tags,
-          nodes
+          nodes,
+          title: help
         }
       }
 

@@ -1,5 +1,4 @@
 const terminalLink = require('terminal-link');
-const { translateIssueGrouping } = require('./translate-issue-labels');
 const {
   logWithIndent,
   logByIssueImpact,
@@ -45,9 +44,9 @@ function outputNodeInformation(
  */
 function outputIssueNodeResults(violations, impact) {
   for (const [groupId, groupValue] of Object.entries(violations)) {
-    const { nodes, tags, helpUrl } = groupValue;
+    const { nodes, tags, helpUrl, description, title } = groupValue;
 
-    outputGroupInfo({ nodes, groupId, helpUrl, tags, impact });
+    outputGroupInfo({ nodes, groupId, helpUrl, tags, impact, description, title });
 
     nodes.forEach((node, index) => {
       outputNodeInformation({ ...node, impact }, index + 1);
@@ -61,6 +60,8 @@ function outputIssueNodeResults(violations, impact) {
  * @param {String} groupId
  * @param {String} helpUrl
  * @param {String} impact
+ * @param {String} title
+ * @param {String} description
  * @param {Array} tags
  * @returns {void}
  */
@@ -68,6 +69,8 @@ function outputGroupInfo({
   nodes,
   groupId,
   helpUrl,
+  title,
+  description,
   tags,
   impact
 }) {
@@ -79,7 +82,6 @@ function outputGroupInfo({
   );
   const standards = tags.join(',\n');
 
-  const { title, text } = translateIssueGrouping(groupId);
   const groupTitle =
     colorByIssueImpact({
       message: `${totalNodes.toString().padStart(2, '0')} ${capitaliseFirst(
@@ -92,11 +94,11 @@ function outputGroupInfo({
     title;
 
   log(groupTitle);
-  log(text);
+  log(description);
   log('');
   log(helpLink);
   log('');
-  log('Failed accessibility standards: ');
+  log('Helpful tags to search in accessibility guidelines: ');
   log(standards);
   log('\n');
 }
