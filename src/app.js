@@ -1,13 +1,13 @@
 const figlet = require('figlet');
 const { runCore: crawler } = require('accessible-pipeline');
-const { args, commandLineHelp } = require('./helpers/parse-args');
+const { args, commandLineHelp } = require('./helpers/args');
 const { faceHappy, faceSad } = require('./helpers/ascii-elements');
 const { getViolationsInfo, mapViolationsToCategory } = require('./helpers/data-structure');
 const { writeReportFile } = require('./helpers/write-report');
 const { outputDetails } = require('./helpers/output-details');
 const { outputTitle } = require('./helpers/output-title');
 const { outputSummary} = require('./helpers/output-summary');
-const { verifyRequiredArgs } = require('./helpers/verify-required-args');
+const { verifyRequiredArgs } = require('./helpers/args');
 const { log, success } = require('./helpers/logger');
 const { drawLine } = require('./helpers/ascii-elements');
 

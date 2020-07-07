@@ -81,7 +81,7 @@ aci [options]
 aci --help
 ```
 
-Flag configurations can be found in [the parse-args helper script](./src/helpers/parse-args.js).
+Flag configurations can be found in [the parse-args helper script](./src/helpers/args.js).
 
 ### Example usage
 

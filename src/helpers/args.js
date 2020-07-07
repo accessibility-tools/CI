@@ -1,6 +1,8 @@
 const URL = require('url').URL;
 const commandLineArgs = require('command-line-args');
 const commandLineUsage = require('command-line-usage');
+const { error, log } = require('./logger');
+
 
 const args = [
   {
@@ -114,8 +116,25 @@ const help = [
   }
 ];
 
+/**
+ * @function verifyRequiredArgs
+ * @param {Array} args
+ * @returns {void}
+ */
+function verifyRequiredArgs(args) {
+  if (args.site instanceof URL === false) {
+    log(
+      error(
+        `The --site or -s flag with a valid base url for crawling must be passed. Example: aci -s https://example.com`
+      )
+    );
+
+    process.exit(1);
+  }
+}
 
 module.exports = {
   args: parsedArgs,
-  commandLineHelp: commandLineUsage(help)
+  commandLineHelp: commandLineUsage(help),
+  verifyRequiredArgs
 };
