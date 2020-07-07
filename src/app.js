@@ -1,33 +1,16 @@
 const figlet = require('figlet');
 const { runCore: crawler } = require('accessible-pipeline');
-const { args } = require('./helpers/parse-args');
-const { faceHappy, faceSad } = require('./helpers/icons');
-const { getViolations } = require('./helpers/parse-report-results');
-const { getViolationNodesCount } = require('./helpers/count-violation-nodes');
-const { violationGroupingReducer } = require('./helpers/group-violations');
+const { args, commandLineHelp } = require('./helpers/args');
+const { faceHappy, faceSad } = require('./helpers/ascii-elements');
+const { getViolationsInfo, mapViolationsToCategory } = require('./helpers/data-structure');
 const { writeReportFile } = require('./helpers/write-report');
-const { displayResults } = require('./helpers/display-results');
-const { verifyRequiredArgs } = require('./helpers/verify-required-args');
-const {
-  log,
-  success,
-  warning,
-  error,
-  inverse,
-  danger
-} = require('./helpers/logger');
+const { outputDetails } = require('./helpers/output-details');
+const { outputTitle } = require('./helpers/output-title');
+const { outputSummary} = require('./helpers/output-summary');
+const { verifyRequiredArgs } = require('./helpers/args');
+const { log, success } = require('./helpers/logger');
+const { drawLine } = require('./helpers/ascii-elements');
 
-const defaultColumns = 80;
-const asciiLineWSBreaks = 4;
-
-const asciiLine = () => {
-  const cols = process.stdout.columns || defaultColumns;
-  return (
-    '\n'.repeat(asciiLineWSBreaks) +
-    '-'.repeat(cols) +
-    '\n'.repeat(asciiLineWSBreaks)
-  );
-};
 
 /**
  * @function runProgram
@@ -36,7 +19,7 @@ const asciiLine = () => {
  */
 async function runProgram() {
   if (args.help === true) {
-    return log(help);
+    return log(commandLineHelp);
   }
   if (args.version === true) {
     const version = require('../package.json').version;
@@ -44,12 +27,8 @@ async function runProgram() {
   }
 
   verifyRequiredArgs(args);
-
   const { results } = await crawler(args.site, args);
-  const violations = getViolations(results);
-  const violationsCount = getViolationNodesCount(violations);
-  const pageCount = violations.length;
-  const averageErrors = Math.round((violationsCount / pageCount) * 100) / 100;
+  const { pageUrls, violations } = getViolationsInfo(results);
 
   if (args.outputFileName) {
     await writeReportFile(
@@ -59,36 +38,34 @@ async function runProgram() {
     );
   }
 
-  log('\n');
-  log(figlet.textSync('Accessibility Report'));
-  log(asciiLine());
+  displayReport({ pageUrls, violations });
+}
+
+function displayReport({ pageUrls, violations }) {
+  const violationsByCategory = mapViolationsToCategory(violations);
+
+  outputTitle();
 
   if (args.displayResults === true) {
-    showDetails(violations);
-    log(asciiLine());
+    outputDetails(violationsByCategory);
+    log(drawLine());
   }
 
-  showSummary({
-    pageCount,
-    violationsCount,
-    results,
-    averageErrors,
+  displaySummary({
+    pageUrls,
+    violationsByCategory,
     violations
   });
 }
 
-function showDetails(violations) {
-  log(figlet.textSync('Details'));
-  displayResults(violations);
-}
-
-function showSummary({
-  pageCount,
-  violationsCount,
-  results,
-  averageErrors,
-  violations
+function displaySummary({
+  pageUrls,
+  violations,
+  violationsByCategory
 }) {
+  const nodes = violations.map(({ nodes }) => nodes).flat();
+  const violationsCount = nodes.length;
+
   log(figlet.textSync('Summary'));
 
   if (violationsCount === 0) {
@@ -96,52 +73,22 @@ function showSummary({
     return log(success('Well done, no violations found!'));
   }
 
-  log(faceSad);
-  log('Thanks for making the web accessible for everybody!');
-  log(`Accessibility report for ${args.site}\n`);
-  log(`Pages scanned: ${pageCount}`);
+  const issuesPerImpact = countIssuesPerImpact(violationsByCategory);
+  const pageCount = pageUrls.length;
+  const averageErrors = Math.round((violationsCount / pageCount) * 100) / 100;
 
-  log(inverse(`Total accessibility issues: ${violationsCount}`));
-  log(`\n\n`);
+  outputSummary({ violations, faceSad, args, issuesPerImpact, pageCount, averageErrors, violationsCount });
+}
 
-  const issuesByCategory =
-    results &&
-    results.map(({ violations }) => violationGroupingReducer(violations));
-
-  const impactCategoryCounts = issuesByCategory.reduce(
-    (output, current) => {
-      for (let [impact, values] of Object.entries(current)) {
-        for (let [issueKey, issue] of Object.entries(values)) {
-          output[impact] += issue.nodes && issue.nodes.length;
-        }
-      }
-
-      return output;
-    },
-    { critical: 0, serious: 0, moderate: 0, minor: 0 }
-  );
-
-  log(error(`Critical Issues: ${impactCategoryCounts.critical}`));
-  log(danger(`Serious Issues: ${impactCategoryCounts.serious}`));
-  log(warning(`Moderate Issues: ${impactCategoryCounts.moderate}`));
-  log(`Minor Issues: ${impactCategoryCounts.minor}\n`);
-
-  if (averageErrors > args.errorAverageThreshold) {
-    log(
-      error(
-        `CI Failed: Average errors of ${averageErrors} were above the defined threshold of ${args.errorAverageThreshold}`
-      )
-    );
-    process.exitCode = 1;
-  } else {
-    log(
-      warning(
-        `CI run complete but ${violationsCount} ${
-          violations === 1 ? 'issue' : 'issues'
-        } require review.`
-      )
-    );
+function countIssuesPerImpact(violationsByCategory) {
+  let impactCategoryCounts = { critical: 0, serious: 0, moderate: 0, minor: 0 };
+  for (let [impact, violations] of Object.entries(violationsByCategory)) {
+    for (let issue of Object.values(violations)) {
+      impactCategoryCounts[impact] += issue.nodes && issue.nodes.length;
+    }
   }
+
+  return impactCategoryCounts;
 }
 
 module.exports = { runProgram };

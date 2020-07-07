@@ -108,6 +108,12 @@ function colorByIssueImpact({ message, impact, isInversed = false }) {
   return coloredMessage;
 }
 
+/**
+ * @function logWithIndent
+ * @param {String} str
+ * @param {Number} indent
+ * @returns {void}
+ */
 function logWithIndent(str, indent = 0) {
   log(indentString(str, indent));
 }

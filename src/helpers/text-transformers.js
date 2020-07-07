@@ -1,5 +1,6 @@
 const colors = require('colors');
 
+
 function capitaliseFirst(text) {
   return text.charAt(0).toUpperCase() + text.substr(1);
 }
