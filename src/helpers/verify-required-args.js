@@ -1,6 +1,7 @@
 const URL = require('url').URL;
 const { error, log } = require('./logger');
 
+
 function verifyRequiredArgs(args) {
   if (args.site instanceof URL === false) {
     log(

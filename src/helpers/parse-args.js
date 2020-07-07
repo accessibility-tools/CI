@@ -96,7 +96,7 @@ function sortArgs(args) {
 }
 
 const options = sortArgs(args);
-
+const parsedArgs = commandLineArgs(options)._all;
 const help = [
   {
     header: 'A11Y CI',
@@ -114,9 +114,8 @@ const help = [
   }
 ];
 
-const parsedArgs = commandLineArgs(options)._all;
 
 module.exports = {
   args: parsedArgs,
-  help: commandLineUsage(help)
+  commandLineHelp: commandLineUsage(help)
 };

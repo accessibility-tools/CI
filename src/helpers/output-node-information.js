@@ -8,7 +8,8 @@ const {
   subtle
 } = require('./logger');
 const { capitaliseFirst } = require('./text-transformers');
-const { mark } = require('./icons');
+const { mark } = require('./ascii-elements');
+
 
 /**
  * @function outputNodeInformation
@@ -38,12 +39,12 @@ function outputNodeInformation(
 
 /**
  * @function outputIssueNodeResults
- * @param {Object} issueGroup
+ * @param {Object} violations
  * @param {String} impact
  * @returns {void}
  */
-function outputIssueNodeResults(issueGroup, impact) {
-  for (const [groupId, groupValue] of Object.entries(issueGroup)) {
+function outputIssueNodeResults(violations, impact) {
+  for (const [groupId, groupValue] of Object.entries(violations)) {
     const { nodes, tags, helpUrl } = groupValue;
 
     outputGroupInfo({ nodes, groupId, helpUrl, tags, impact });
@@ -59,6 +60,7 @@ function outputIssueNodeResults(issueGroup, impact) {
  * @param {Array<any>} nodes
  * @param {String} groupId
  * @param {String} helpUrl
+ * @param {String} impact
  * @param {Array} tags
  * @returns {void}
  */
