@@ -5,7 +5,6 @@ const {
 const path = require('path');
 const mkdirp = require('mkdirp');
 
-
 /**
  * @function writeReportFile
  * @description writes the report results to a provided output output path

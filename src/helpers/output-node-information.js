@@ -9,7 +9,6 @@ const {
 const { capitaliseFirst } = require('./text-transformers');
 const { mark } = require('./ascii-elements');
 
-
 /**
  * @function outputNodeInformation
  * @param {any} node
@@ -19,16 +18,16 @@ const { mark } = require('./ascii-elements');
  * @param {Number} nodeNumber
  * @returns {void}
  */
-function outputNodeInformation(
-  { failureSummary, target, impact },
-  nodeNumber
-) {
+function outputNodeInformation({ failureSummary, target, impact }, nodeNumber) {
   const title = capitaliseFirst(`Required fix #${nodeNumber}`);
   const summaryTitle = capitaliseFirst(`Issue summary`);
   const selectorTitle = capitaliseFirst(`Failing element(s) CSS selector`);
   const selectors = target.join(',\n');
 
-  logWithIndent(colorByIssueImpact({ message: title, impact, isInversed: true }), 2);
+  logWithIndent(
+    colorByIssueImpact({ message: title, impact, isInversed: true }),
+    2
+  );
   logWithIndent(subtle(summaryTitle), 4);
   logWithIndent(failureSummary, 6);
   logWithIndent(subtle(selectorTitle), 4);
@@ -46,7 +45,15 @@ function outputIssueNodeResults(violations, impact) {
   for (const [groupId, groupValue] of Object.entries(violations)) {
     const { nodes, tags, helpUrl, description, title } = groupValue;
 
-    outputGroupInfo({ nodes, groupId, helpUrl, tags, impact, description, title });
+    outputGroupInfo({
+      nodes,
+      groupId,
+      helpUrl,
+      tags,
+      impact,
+      description,
+      title
+    });
 
     nodes.forEach((node, index) => {
       outputNodeInformation({ ...node, impact }, index + 1);

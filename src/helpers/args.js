@@ -3,12 +3,11 @@ const commandLineArgs = require('command-line-args');
 const commandLineUsage = require('command-line-usage');
 const { error, log } = require('./logger');
 
-
 const args = [
   {
     name: 'site',
     alias: 's',
-    type: url => new URL(url),
+    type: (url) => new URL(url),
     typeLabel: '{underline url}',
     group: 'required',
     defaultOption: true

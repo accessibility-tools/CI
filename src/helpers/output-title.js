@@ -2,7 +2,6 @@ const figlet = require('figlet');
 const { log } = require('./logger');
 const { drawLine } = require('./ascii-elements');
 
-
 /**
  * @function outputNodeInformation
  * @returns {void}

@@ -2,15 +2,17 @@ const figlet = require('figlet');
 const { runCore: crawler } = require('accessible-pipeline');
 const { args, commandLineHelp } = require('./helpers/args');
 const { faceHappy, faceSad } = require('./helpers/ascii-elements');
-const { getViolationsInfo, mapViolationsToCategory } = require('./helpers/data-structure');
+const {
+  getViolationsInfo,
+  mapViolationsToCategory
+} = require('./helpers/data-structure');
 const { writeReportFile } = require('./helpers/write-report');
 const { outputDetails } = require('./helpers/output-details');
 const { outputTitle } = require('./helpers/output-title');
-const { outputSummary} = require('./helpers/output-summary');
+const { outputSummary } = require('./helpers/output-summary');
 const { verifyRequiredArgs } = require('./helpers/args');
 const { log, success } = require('./helpers/logger');
 const { drawLine } = require('./helpers/ascii-elements');
-
 
 /**
  * @function runProgram
@@ -58,11 +60,7 @@ function displayReport({ pageUrls, violations }) {
   });
 }
 
-function displaySummary({
-  pageUrls,
-  violations,
-  violationsByCategory
-}) {
+function displaySummary({ pageUrls, violations, violationsByCategory }) {
   const nodes = violations.map(({ nodes }) => nodes).flat();
   const violationsCount = nodes.length;
 
@@ -77,7 +75,15 @@ function displaySummary({
   const pageCount = pageUrls.length;
   const averageErrors = Math.round((violationsCount / pageCount) * 100) / 100;
 
-  outputSummary({ violations, faceSad, args, issuesPerImpact, pageCount, averageErrors, violationsCount });
+  outputSummary({
+    violations,
+    faceSad,
+    args,
+    issuesPerImpact,
+    pageCount,
+    averageErrors,
+    violationsCount
+  });
 }
 
 function countIssuesPerImpact(violationsByCategory) {
