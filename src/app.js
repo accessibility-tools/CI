@@ -4,7 +4,7 @@ const { args, commandLineHelp } = require('./helpers/args');
 const { faceHappy, faceSad } = require('./helpers/ascii-elements');
 const {
   getViolationsInfo,
-  mapViolationsToCategory
+  mapViolationsByImpact
 } = require('./helpers/data-structure');
 const { writeReportFile } = require('./helpers/write-report');
 const { outputDetails } = require('./helpers/output-details');
@@ -44,23 +44,23 @@ async function runProgram() {
 }
 
 function displayReport({ pageUrls, violations }) {
-  const violationsByCategory = mapViolationsToCategory(violations);
+  const violationsByImpact = mapViolationsByImpact(violations);
 
   outputTitle();
 
   if (args.displayResults === true) {
-    outputDetails(violationsByCategory);
+    outputDetails(violationsByImpact);
     log(drawLine());
   }
 
   displaySummary({
     pageUrls,
-    violationsByCategory,
+    violationsByImpact,
     violations
   });
 }
 
-function displaySummary({ pageUrls, violations, violationsByCategory }) {
+function displaySummary({ pageUrls, violations, violationsByImpact }) {
   const nodes = violations.map(({ nodes }) => nodes).flat();
   const violationsCount = nodes.length;
 
@@ -71,7 +71,7 @@ function displaySummary({ pageUrls, violations, violationsByCategory }) {
     return log(success('Well done, no violations found!'));
   }
 
-  const issuesPerImpact = countIssuesPerImpact(violationsByCategory);
+  const issuesPerImpact = countIssuesPerImpact(violationsByImpact);
   const pageCount = pageUrls.length;
   const averageErrors = Math.round((violationsCount / pageCount) * 100) / 100;
 
@@ -86,11 +86,14 @@ function displaySummary({ pageUrls, violations, violationsByCategory }) {
   });
 }
 
-function countIssuesPerImpact(violationsByCategory) {
+function countIssuesPerImpact(violationsByImpact) {
   let impactCategoryCounts = { critical: 0, serious: 0, moderate: 0, minor: 0 };
-  for (let [impact, violations] of Object.entries(violationsByCategory)) {
+  for (let [impact, violations] of Object.entries(violationsByImpact)) {
     for (let issue of Object.values(violations)) {
-      impactCategoryCounts[impact] += issue.nodes && issue.nodes.length;
+      const { nodesPerPage } = issue;
+      nodesPerPage.forEach(item => {
+        impactCategoryCounts[impact] += item.nodes && item.nodes.length;
+      });
     }
   }
 

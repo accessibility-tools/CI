@@ -7,10 +7,12 @@ const args = [
   {
     name: 'site',
     alias: 's',
-    type: (url) => new URL(url),
+    type: url => new URL(url),
     typeLabel: '{underline url}',
     group: 'required',
-    defaultOption: true
+    defaultOption: true,
+    description:
+      'What is the base URL to begin crawling from? Must be a fully qualified URL, for example: https://example.com'
   },
   {
     name: 'ignoreExtensions',
@@ -27,7 +29,14 @@ const args = [
     defaultValue: false,
     group: 'optional'
   },
-  { name: 'pageLimit', alias: 'l', type: Number, group: 'optional' },
+  {
+    name: 'pageLimit',
+    alias: 'l',
+    type: Number,
+    defaultValue: 20,
+    group: 'optional',
+    description: 'How many pages do you want to crawl at most? Defaults to 20'
+  },
   {
     name: 'streaming',
     alias: 'm',
@@ -62,7 +71,12 @@ const args = [
     type: String,
     group: 'optional'
   },
-  { name: 'outputDirectory', alias: 'o', type: String, group: 'optional' },
+  {
+    name: 'outputDirectory',
+    alias: 'o',
+    type: String,
+    group: 'optional'
+  },
   {
     name: 'errorAverageThreshold',
     alias: 't',
@@ -89,9 +103,11 @@ function sortArgs(args) {
     if (left.alias < right.alias) {
       return -1;
     }
+
     if (left.alias > right.alias) {
       return 1;
     }
+
     return 0;
   });
 }

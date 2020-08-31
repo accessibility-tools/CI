@@ -13,25 +13,28 @@ const { mark } = require('./ascii-elements');
  * @function outputNodeInformation
  * @param {any} node
  * @param {String} impact
- * @param {String} node.failureSummary
- * @param {Array<String>} node.target
+ * @param {String} node.pageUrl
+ * @param {Array<Object>} node.nodes
  * @param {Number} nodeNumber
  * @returns {void}
  */
-function outputNodeInformation({ failureSummary, target, impact }, nodeNumber) {
+function outputNodeInformation({ pageUrl, nodes, impact }, nodeNumber) {
   const title = capitaliseFirst(`Required fix #${nodeNumber}`);
-  const summaryTitle = capitaliseFirst(`Issue summary`);
-  const selectorTitle = capitaliseFirst(`Failing element(s) CSS selector`);
-  const selectors = target.join(',\n');
+  const summaryTitle = capitaliseFirst('Issue summary');
+  const onPage = capitaliseFirst(`On page: ${pageUrl}`);
+  const targets = [];
+
+  nodes.forEach(item => targets.push(item.target.join('\n')));
+  const selectors = targets.join('\n');
 
   logWithIndent(
     colorByIssueImpact({ message: title, impact, isInversed: true }),
     2
   );
   logWithIndent(subtle(summaryTitle), 4);
-  logWithIndent(failureSummary, 6);
-  logWithIndent(subtle(selectorTitle), 4);
-  logWithIndent(selectors, 6);
+  logWithIndent(`${nodes[0].failureSummary}`, 6);
+  logWithIndent(onPage, 6);
+  logWithIndent(selectors, 8);
   log('\n');
 }
 
@@ -43,10 +46,10 @@ function outputNodeInformation({ failureSummary, target, impact }, nodeNumber) {
  */
 function outputIssueNodeResults(violations, impact) {
   for (const [groupId, groupValue] of Object.entries(violations)) {
-    const { nodes, tags, helpUrl, description, title } = groupValue;
+    const { nodesPerPage, tags, helpUrl, description, title } = groupValue;
 
     outputGroupInfo({
-      nodes,
+      nodesPerPage,
       groupId,
       helpUrl,
       tags,
@@ -55,7 +58,7 @@ function outputIssueNodeResults(violations, impact) {
       title
     });
 
-    nodes.forEach((node, index) => {
+    nodesPerPage.forEach((node, index) => {
       outputNodeInformation({ ...node, impact }, index + 1);
     });
   }
@@ -73,7 +76,7 @@ function outputIssueNodeResults(violations, impact) {
  * @returns {void}
  */
 function outputGroupInfo({
-  nodes,
+  nodesPerPage,
   groupId,
   helpUrl,
   title,
@@ -81,7 +84,7 @@ function outputGroupInfo({
   tags,
   impact
 }) {
-  const totalNodes = nodes.length;
+  const totalNodes = nodesPerPage.length;
   const postFix = totalNodes === 1 ? 'issue' : 'issues';
   const helpLink = terminalLink(
     'Tools and resources to solve this issues',

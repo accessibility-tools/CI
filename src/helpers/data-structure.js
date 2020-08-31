@@ -6,24 +6,31 @@
  */
 function getViolationsInfo(data) {
   return data.reduce(
-    (acc, { violations, url }) =>
-      violations &&
-      violations.length > 0 && {
-        violations: [...acc.violations, ...violations],
-        pageUrls: [...acc.pageUrls, url]
-      },
+    (acc, { violations, url }) => {
+      const violationsWithUrl =
+        violations &&
+        violations.length > 0 &&
+        violations.map(violation => ({ ...violation, pageUrl: url }));
+
+      return (
+        violationsWithUrl && {
+          violations: [...acc.violations, ...violationsWithUrl],
+          pageUrls: [...acc.pageUrls, url]
+        }
+      );
+    },
     { violations: [], pageUrls: [] }
   );
 }
 
 /**
- * @function mapViolationsToCategory
+ * @function mapViolationsByImpact
  * @param {Array<Object>} violations
  * @returns {Object} the violations grouped by impact level and then by issue id
  */
-function mapViolationsToCategory(violations) {
+function mapViolationsByImpact(violations) {
   return violations.reduce(
-    (acc, { nodes, id, impact, help, description, helpUrl, tags }) => {
+    (acc, { nodes, id, impact, help, description, helpUrl, pageUrl, tags }) => {
       if (!acc[impact]) {
         acc[impact] = {};
       }
@@ -31,7 +38,13 @@ function mapViolationsToCategory(violations) {
       if (acc[impact][id]) {
         acc[impact][id] = {
           ...acc[impact][id],
-          nodes: [...(acc[impact][id].nodes || []), ...nodes]
+          nodesPerPage: [
+            ...acc[impact][id].nodesPerPage,
+            {
+              pageUrl,
+              nodes: [...(acc[impact][id].nodesPerPage.nodes || []), ...nodes]
+            }
+          ]
         };
       } else {
         acc[impact][id] = {
@@ -39,7 +52,12 @@ function mapViolationsToCategory(violations) {
           helpUrl,
           description,
           tags,
-          nodes,
+          nodesPerPage: [
+            {
+              pageUrl,
+              nodes
+            }
+          ],
           title: help
         };
       }
@@ -52,5 +70,5 @@ function mapViolationsToCategory(violations) {
 
 module.exports = {
   getViolationsInfo,
-  mapViolationsToCategory
+  mapViolationsByImpact
 };
