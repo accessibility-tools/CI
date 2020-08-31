@@ -7,7 +7,7 @@ const args = [
   {
     name: 'site',
     alias: 's',
-    type: url => new URL(url),
+    type: (url) => new URL(url),
     typeLabel: '{underline url}',
     group: 'required',
     defaultOption: true,

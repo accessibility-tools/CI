@@ -10,7 +10,7 @@ function getViolationsInfo(data) {
       const violationsWithUrl =
         violations &&
         violations.length > 0 &&
-        violations.map(violation => ({ ...violation, pageUrl: url }));
+        violations.map((violation) => ({ ...violation, pageUrl: url }));
 
       return (
         violationsWithUrl && {

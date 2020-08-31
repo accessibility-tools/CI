@@ -91,7 +91,7 @@ function countIssuesPerImpact(violationsByImpact) {
   for (let [impact, violations] of Object.entries(violationsByImpact)) {
     for (let issue of Object.values(violations)) {
       const { nodesPerPage } = issue;
-      nodesPerPage.forEach(item => {
+      nodesPerPage.forEach((item) => {
         impactCategoryCounts[impact] += item.nodes && item.nodes.length;
       });
     }

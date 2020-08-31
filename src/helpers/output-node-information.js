@@ -24,7 +24,7 @@ function outputNodeInformation({ pageUrl, nodes, impact }, nodeNumber) {
   const onPage = capitaliseFirst(`On page: ${pageUrl}`);
   const targets = [];
 
-  nodes.forEach(item => targets.push(item.target.join('\n')));
+  nodes.forEach((item) => targets.push(item.target.join('\n')));
   const selectors = targets.join('\n');
 
   logWithIndent(
