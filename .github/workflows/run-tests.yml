@@ -1,0 +1,11 @@
+name: run-tests
+on: pull_request
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Running tests
+        run: npm run test --if-present

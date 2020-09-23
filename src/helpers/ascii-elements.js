@@ -48,7 +48,6 @@ function drawLine() {
   );
 }
 
-
 module.exports = {
   faceHappy,
   faceSad,

@@ -5,7 +5,6 @@ const {
   outputIssueSectionTitle
 } = require('./output-node-information');
 
-
 /**
  * @function displayResults
  * @description takes the violations and logs all issues by grouping and impact

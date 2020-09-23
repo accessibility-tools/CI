@@ -1,11 +1,4 @@
-const {
-  log,
-  warning,
-  error,
-  inverse,
-  danger
-} = require('./logger');
-
+const { log, warning, error, inverse, danger } = require('./logger');
 
 /**
  * @function outputSummary

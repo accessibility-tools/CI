@@ -9,7 +9,6 @@ const {
 const { capitaliseFirst } = require('./text-transformers');
 const { mark } = require('./ascii-elements');
 
-
 /**
  * @function outputNodeInformation
  * @param {any} node
@@ -19,10 +18,7 @@ const { mark } = require('./ascii-elements');
  * @param {Number} nodeNumber
  * @returns {void}
  */
-function outputNodeInformation(
-  { pageUrl, nodes, impact },
-  nodeNumber
-) {
+function outputNodeInformation({ pageUrl, nodes, impact }, nodeNumber) {
   const title = capitaliseFirst(`Required fix #${nodeNumber}`);
   const summaryTitle = capitaliseFirst('Issue summary');
   const onPage = capitaliseFirst(`On page: ${pageUrl}`);
@@ -31,7 +27,10 @@ function outputNodeInformation(
   nodes.forEach((item) => targets.push(item.target.join('\n')));
   const selectors = targets.join('\n');
 
-  logWithIndent(colorByIssueImpact({ message: title, impact, isInversed: true }), 2);
+  logWithIndent(
+    colorByIssueImpact({ message: title, impact, isInversed: true }),
+    2
+  );
   logWithIndent(subtle(summaryTitle), 4);
   logWithIndent(`${nodes[0].failureSummary}`, 6);
   logWithIndent(onPage, 6);
@@ -49,7 +48,15 @@ function outputIssueNodeResults(violations, impact) {
   for (const [groupId, groupValue] of Object.entries(violations)) {
     const { nodesPerPage, tags, helpUrl, description, title } = groupValue;
 
-    outputGroupInfo({ nodesPerPage, groupId, helpUrl, tags, impact, description, title });
+    outputGroupInfo({
+      nodesPerPage,
+      groupId,
+      helpUrl,
+      tags,
+      impact,
+      description,
+      title
+    });
 
     nodesPerPage.forEach((node, index) => {
       outputNodeInformation({ ...node, impact }, index + 1);

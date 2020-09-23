@@ -32,20 +32,20 @@ To solve it, you need to try out following solutions:
     ```bash
      sudo chown -R $USER <path_to_the_installation_directory>
     ```
-    Now re-install the tool: 
+    Now re-install the tool:
     ```bash
      npm uninstall @accessibility-tools/ci -g
      npm install @accessibility-tools/ci -g
     ```
-     
+
     **Note**: in most cases the path to the installation directory is `/usr/local/lib/node_modules`.
-      
+
 2. in case you have right permissions, but the installation still throws the error you need to install Chromium manually.
-    For that first of all uninstall the current failed installation of the tool.  
+    For that first of all uninstall the current failed installation of the tool.
     ```bash
      npm uninstall @accessibility-tools/ci -g
     ```
-    Now disabled auto-downloading for Chromium via a global env variable: 
+    Now disabled auto-downloading for Chromium via a global env variable:
     ```bash
      export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
     ```
@@ -63,7 +63,7 @@ To solve it, you need to try out following solutions:
     ```bash
      npx @accessibility-tools/ci -s <website_url>
     ```
-    **Note**: however, in this case `npx` will download Chromium every time when you run this command and remove it after its execution.  
+    **Note**: however, in this case `npx` will download Chromium every time when you run this command and remove it after its execution.
 
 **Note**: please note that in different operation systems granting permissions, setting/unsetting glabal env commands can be different (example is presenting for OS X).
 
@@ -122,6 +122,12 @@ aci https://example.com --ignoreFragmentLinks --ignoreQueryParams
 - [NodeJS](https://nodejs.org/)
 - [Git SCM](https://git-scm.com/)
 - [All other dependencies](./package.json)
+
+## CI/CD
+
+The `npm-publish` workflow will run when you push a commit with a message to the `master` branch using the format `Release x.x.x` such as `Release 2.2.3` for example. The workflow will check that the version has changed from the last release to npm and if it has, it will auto-deploy to npm for you. The workflow only runs on pushes to the `master` branch.
+
+The `format-code` workflow runs if the `format` script is present in the `package.json` and the `run-tests` workflow does much the same since it needs the `test` script to exist in the `package.json` for it to be run. Both the `format-code` workflow and the `run-tests` workflow run at the time of pull request creation.
 
 ## Contributing
 
